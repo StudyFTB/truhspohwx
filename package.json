@@ -1,5 +1,5 @@
 {
-  "name": "truhspohwx",
+  "name": "tru-hspo-hwx",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -34,8 +34,8 @@
       "eslint:recommended"
     ],
     "rules": {
-			"no-console":"off"
-		},
+      "no-console": "off"
+    },
     "parserOptions": {
       "parser": "babel-eslint"
     }
@@ -48,5 +48,17 @@
   "browserslist": [
     "> 1%",
     "last 2 versions"
-  ]
+  ],
+  "description": "## Project setup ``` npm install ```",
+  "main": "babel.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/StudyFTB/truhspohwx.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/StudyFTB/truhspohwx/issues"
+  },
+  "homepage": "https://github.com/StudyFTB/truhspohwx#readme"
 }

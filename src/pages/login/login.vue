@@ -12,7 +12,7 @@
 					本系统将于2019年11月18日进行维护更新,如有不便之处,请您原谅,谢谢合作!
 				</div>
 				<div class="p-1 text-center border-top">
-					<button type="button" class="btn btn-success btn-sm" @click="show = fasle">我知道了</button>
+					<button type="button" class="btn btn-success btn-sm" @click="show = false">我知道了</button>
 				</div>
 			</div>
 		</van-overlay>
@@ -34,7 +34,7 @@
 		},
 		data() {
 			return {
-				show: false, //是否显示遮罩层
+				show: true, //是否显示遮罩层
 				isFirst:false ,//是否是第一次登录
 				main:loginFirst
 			}
