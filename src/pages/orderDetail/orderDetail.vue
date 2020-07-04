@@ -131,7 +131,7 @@
 <script>
 import Header from '../../components/Header';
 
-export default{
+export default {
 	components:{
 		Header:Header
 	},
@@ -160,7 +160,7 @@ export default{
 
 <style scoped>
 #orderDetail{
-	background: #ccc;
+	background: #f5f5f5;
 	padding-bottom: .5rem;
 }
 

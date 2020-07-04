@@ -1,57 +1,56 @@
 <template>
-	<div id="shopCar" >
-		<!-- 结算栏 -->
-		<div class="downFooter d-flex justify-content-start" @click="show = !show">
-			<div class="ml-3 iconShopCar" :class="{'bg-primary':footInfo.num>0}">
-				<i class="iconfont icongouwuche"></i>
-				<span>{{footInfo.num}}</span>
-			</div>
-			<div class=" needPayInfo" :class="{'bg-primary':footInfo.num>0}">
-				本餐共需支付<strong class="text-danger">10</strong>元
-			</div>
-			<div class="toPayBtn " :class="{'bg-success':footInfo.num>0}" @click.stop="toPay">
-				去结算
-			</div>
+<div id="shopCar" >
+	<!-- 结算栏 -->
+	<div class="downFooter d-flex justify-content-start" @click="show = !show">
+		<div class="ml-3 iconShopCar" :class="{'bg-primary':footInfo.num>0}">
+			<i class="iconfont icongouwuche"></i>
+			<span>{{footInfo.num}}</span>
 		</div>
-		<!-- 遮罩层 -->
-		<van-overlay :show="show" @click="show = false">
-			<div class="shopGoods" @click.stop="">
-					<div class="boxTop mb-1">
-						<div style="font-size:.8rem;" @click="show = false">关闭</div>
-						<div style="font-size:.8rem;color:#0099cc;">清空购物车</div>
-					</div>
-					<ul>
-						<li class="mt-2 mb-2">
-							<div class="goodsName">
-								菜品名称
-							</div>
-							<div class="goodsPrice text-danger">
-								￥10
-							</div>
-							<div class="goodsNum">
-								<i class="iconfont iconjianhao jiajian"></i>
-								<input readonly="" class="text_box" value="1">
-								<i class="iconfont iconjiahao jiajian"></i>
-							</div>
-						</li>
-						<li class="pt-1 pb-1">
-							<div class="goodsName">
-								菜品名称
-							</div>
-							<div class="goodsPrice text-danger">
-								￥10
-							</div>
-							<div class="goodsNum">
-								<i class="iconfont iconjianhao jiajian"></i>
-								<input readonly="" class="text_box" value="1">
-								<i class="iconfont iconjiahao jiajian"></i>
-							</div>
-						</li>
-					</ul>
-				</div>
-		</van-overlay>
+		<div class=" needPayInfo">
+			本餐共需支付<strong class="text-danger">10</strong>元
+		</div>
+		<div class="toPayBtn " :class="{'bg-primary':footInfo.num>0}" @click.stop="toPay">
+			去结算
+		</div>
 	</div>
-	
+	<!-- 遮罩层 -->
+	<van-overlay :show="show" @click="show = false">
+		<div class="shopGoods" @click.stop="">
+				<div class="boxTop mb-1">
+					<div style="font-size:.8rem;" @click="show = false">关闭</div>
+					<div style="font-size:.8rem;color:#0099cc;">清空购物车</div>
+				</div>
+				<ul>
+					<li class="mt-2 mb-2">
+						<div class="goodsName">
+							菜品名称
+						</div>
+						<div class="goodsPrice text-danger">
+							￥10
+						</div>
+						<div class="goodsNum">
+							<i class="iconfont iconjianhao2 jiajian"></i>
+							<input readonly="" class="text_box" value="1">
+							<i class="iconfont iconjiahao jiajian"></i>
+						</div>
+					</li>
+					<li class="pt-1 pb-1">
+						<div class="goodsName">
+							菜品名称
+						</div>
+						<div class="goodsPrice text-danger">
+							￥10
+						</div>
+						<div class="goodsNum">
+							<i class="iconfont iconjianhao2 jiajian"></i>
+							<input readonly="" class="text_box" value="1">
+							<i class="iconfont iconjiahao jiajian"></i>
+						</div>
+					</li>
+				</ul>
+			</div>
+	</van-overlay>
+</div>
 </template>
 
 <script>
@@ -75,7 +74,7 @@
 	}
 </script>
 
-<style scoped="scoped">
+<style lang="scss" scoped>
 	@import url("//at.alicdn.com/t/font_1473431_nyx699vr128.css");
 	.downFooter{
 		position: fixed;
@@ -87,7 +86,7 @@
 	}
 	
 	.iconShopCar{
-		border: 1px solid #FFFFFF;
+		border: 1px solid #333;
 		width:50px;
 		height:50px;
 		border-radius:50%;
@@ -203,9 +202,9 @@
 	}
 	
 	.jiajian{
-		font-size: 22px!important;
-		color: #4c87bf;
-		line-height: 22px!important;
+		font-size: 25px!important;
+		color: $primary-color;
+		line-height: 25px!important;
 	}
 	
 	.text_box{

@@ -8,9 +8,13 @@ export default new VueRouter({
 	routes:[
 		{
 			path:'/',
-			name:'Login',
-			component: resolve => require(['../pages/login/login.vue'],resolve),
-			meta:{title:'登录'}
+			redirect:{name:"BedInfo"}
+		},
+		{
+			path:'/bedinfo',
+			name:'BedInfo',
+			component: resolve => require(['../pages/bed-info'],resolve),
+			meta:{title:'床位信息'}
 		},
 		{
 			path:'/type',

@@ -8,7 +8,8 @@
 			<p>所有订餐时间均为提前30分钟，用户在下单前务必看好预订餐品日期，请在提交前仔细核对订单内容（床号、电话），订单确认后无法取消订单或者更换订单内容。</p>
 		</div>
 		<div>
-			<button class="btn  btn-block mt-3" :class="readTime==0 ? 'btn-success' : 'btn-secondary'">
+			<button class="btn btn-block mt-3" :class="readTime==0 ? 'btn-success' : 'btn-secondary'"
+				:disabled="readTime!==0" @click="onRead">
 				阅读并同意<span :class="{'d-none':readTime==0}">({{readTime}})</span>
 			</button>
 		</div>
@@ -16,26 +17,30 @@
 </template>
 
 <script>
-	export default{
-		data(){
-			return{
-				readTime:3
-			}
+export default {
+	data(){
+		return{
+			readTime:3
+		}
+	},
+	mounted(){
+		this.timer();
+	},
+	methods:{
+		timer(){ //计时器运行的函数
+			var _this=this;
+			var atimer=setInterval(function(){
+				_this.readTime=_this.readTime-1;
+				if(_this.readTime<=0)
+					clearInterval(atimer);
+			},1000);
 		},
-		mounted(){
-			this.timer();
-		},
-		methods:{
-			timer(){ //计时器运行的函数
-				var _this=this;
-				var atimer=setInterval(function(){
-					_this.readTime=_this.readTime-1;
-					if(_this.readTime<=0)
-						clearInterval(atimer);
-				},1000);
-			},
+		// 点击阅读并同意的按钮
+		onRead(){
+			this.$store.dispatch("app/setIsFirst");
 		}
 	}
+}
 </script>
 
 <style>

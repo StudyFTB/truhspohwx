@@ -17,7 +17,7 @@
         <div>
             <div class="card">
                 <div class="card-header">
-                    <small>2019-10-14（早餐）</small>
+                    <span>2019-10-14（早餐）</span>
                 </div>
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
@@ -43,12 +43,14 @@
                 </div>
             </div>
         </div>
-        <div class="mt-3">
-            <div class="mt-2">
-                联系人：<input type="text" value="" maxlength="5" placeholder="最多不超过5个字" />
+        <div class="input-wrap">
+            <div>
+                <label>联系人</label>
+                <input type="text" value="" maxlength="5" placeholder="最多不超过5个字" />
             </div>
-            <div class="mt-2">
-                备&nbsp;&nbsp;&nbsp;&nbsp;注：<input type="text" value="" maxlength="15" placeholder="最多不超过15个字" />
+            <div>
+                <label>备注</label>
+                <input type="text" value="" maxlength="15" placeholder="最多不超过15个字" />
             </div>
         </div>
         <footer>
@@ -73,22 +75,21 @@ export default {
     },
     methods:{
         toNext(){
-            this.$router.push("/type");
+            this.$router.push("/bedinfo");
         }
     }
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 #pay{
     position: fixed;
     top: 0;
     left: 0;
     right:0;
     bottom:0;
-    background: linear-gradient(#4c87bf,#ff944d);
+    background-image: linear-gradient(#007bff,#fff);
 }
-
 footer {
 	position: fixed;
 	left: 0;
@@ -112,6 +113,28 @@ footer {
 	text-align: center;
 	padding: 2.5% 0;
 	font-weight: bold;
+}
+.input-wrap{
+    margin-top: 20px;
+    &>div{
+        margin-bottom: 10px;
+        &>label{
+            width: 70px;
+            text-align: right;
+            line-height: 32px;
+            margin: 0;
+        }
+        input{
+            padding: 2px 15px;
+            width: calc(100% - 70px);
+        }
+    }
+    &>div:nth-child(1)>label{
+        letter-spacing:7px;
+    }
+    &>div:nth-child(2)>label{
+        letter-spacing:17px;
+    }
 }
 
 </style>

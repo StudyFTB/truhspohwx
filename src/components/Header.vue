@@ -20,7 +20,7 @@
 	import { NavBar } from 'vant';
 	import { Icon } from 'vant';
 	
-	export default{
+	export default {
 		props:{
 			title:String,
 			hiddenHome:Boolean //隐藏home键
@@ -34,7 +34,7 @@
 				this.$router.go(-1);
 			},
 			toHome(){
-				this.$router.push("/type");
+				this.$router.push("/bedinfo");
 			}
 		}
 	}

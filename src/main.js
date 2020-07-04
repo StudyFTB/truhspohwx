@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router/router.js'
+// vuex
+import store from '@/store';
 
 router.beforeEach((to, from, next) => {
 /* 路由发生变化修改页面title */
@@ -10,9 +12,10 @@ router.beforeEach((to, from, next) => {
 	next()
 })
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 
 new Vue({
 	router,
+	store,
 	render: h => h(App),
 }).$mount('#app')

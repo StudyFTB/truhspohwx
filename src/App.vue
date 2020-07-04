@@ -1,6 +1,10 @@
 <template>
 <div id="app">
-	<router-view></router-view>
+	<transition>
+		<keep-alive>
+			<router-view></router-view>
+		</keep-alive>
+	</transition>
 </div>
 </template>
 
@@ -12,7 +16,7 @@ export default {
 
 <style>
 @import url("./assets/css/bootstrap.min.css");
-@import url("//at.alicdn.com/t/font_1473431_4xwss2usdhm.css");
+@import url("//at.alicdn.com/t/font_1473431_7mn0dxqrv6t.css");
 #app {
 	font-family: 'Avenir', Helvetica, Arial, sans-serif;
 	-webkit-font-smoothing: antialiased;

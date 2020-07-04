@@ -11,7 +11,7 @@
 					<div>备注：{{bedli.remark}}</div>
 				</div>
 				<div class="bedBtn p-1">
-					<van-button type="danger" size="small" to="/type">订餐</van-button>
+					<van-button type="danger" size="small" to="/area">订餐</van-button>
 				</div>
 			</li>
 		</ul>
@@ -41,38 +41,38 @@
 </script>
 
 <style scoped>
-	.bedUl{
-		margin: 0;
-		padding: 0;
-		list-style-type: none;
-	}
-	
-	.bedBtn{
-		display: flex;
-		justify-content: center;
-		align-items: center;
-	}
-	
-	.newMark{
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: .5rem;
-		height: .5rem;
-		background-color: #007bff;
-		border-radius: 0 0 100% 0;
-	}
-	
-	.headTip{
-		color: white;
-		background: #007bff;
-		text-align: center;
-		position: relative;
-		top:0;
-		left: -15px;
-		right: -15px;
-		width: calc(100% + 30px);
-		margin-bottom:.5rem;
-		padding:.5rem 0;
-	}
+.bedUl{
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+.bedBtn{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.newMark{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: .5rem;
+	height: .5rem;
+	background-color: #007bff;
+	border-radius: 0 0 100% 0;
+}
+
+.headTip{
+	color: white;
+	background: #007bff;
+	text-align: center;
+	position: relative;
+	top:0;
+	left: -15px;
+	right: -15px;
+	width: calc(100% + 30px);
+	margin-bottom:.5rem;
+	padding:.5rem 0;
+}
 </style>
