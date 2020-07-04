@@ -61,8 +61,8 @@ export default {
 	data(){
 		return{
 			images: [
-				'https://img.yzcdn.cn/vant/apple-1.jpg',
-				'https://img.yzcdn.cn/vant/apple-2.jpg',
+				require("@/assets/img/area.png"),
+				require("@/assets/img/st.jpg"),
 			],
 		}
 	},
@@ -78,6 +78,7 @@ export default {
 /deep/ .van-swipe{
 	img{
 		width: 100%;
+		height: 120px;
 	}
 }
 .main{
