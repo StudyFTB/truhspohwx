@@ -54,14 +54,14 @@ module.exports = {
     devServer: {
         open: false,
         // host: 'localhost',
-        port: 8090,
+        port: 80,  // 8090
         // https: false,
         // hotOnly: false,
         // proxy: 'http://127.0.0.1:8080' // 配置跨域处理,只有一个代理
 //         proxy: { // 配置跨域
 //             '/api': {
 // 　　　　　　　　　　//要访问的跨域的api的域名
-//                 target: 'http://127.0.0.1:2233/api',
+//                 target: 'http://192.168.0.45:8080/TRUHSPOSWX',
 //                 ws: true,
 //                 changOrigin: true,
 //                 pathRewrite: {

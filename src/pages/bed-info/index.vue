@@ -42,6 +42,25 @@ export default {
 		return {
 			show: true //是否显示遮罩层
 		}
+	},
+	created(){
+		let { wxCode, wxState } = this.getUrlParams();
+		this.$store.dispatch("app/Login",{
+			qrstr: wxState,
+			code: wxCode
+		}).then(res => {
+			console.log(res);
+		}).catch();
+	},
+	methods: {
+		// 获取url的参数code和state
+		getUrlParams(){
+			let reg = /\?code=(.*)\&state=(.*)/g;
+			let execRes = reg.exec(location.search);
+			let wxCode = execRes[1];
+			let wxState = execRes[2];
+			return { wxCode, wxState };
+		}
 	}
 }
 </script>

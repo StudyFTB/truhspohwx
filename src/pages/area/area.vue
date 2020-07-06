@@ -2,7 +2,7 @@
 <div>
 	<!-- 头部标题 -->
 	<Header title="选择商家"></Header>
-	<van-swipe :autoplay="3000">
+	<van-swipe :autoplay="3000" :show-indicators="false">
 		<van-swipe-item v-for="(image, index) in images" :key="index">
 			<img v-lazy="image" />
 		</van-swipe-item>
@@ -31,9 +31,12 @@
 						</div>
 						<van-tag plain type="danger">食堂配送</van-tag>
 					</div>
-					<div class="remark-wrap">
+					<marquee class="text-secondary">
+						<span>这是场所的备注一二三四五六七八九十个十百千万gdsf</span>
+					</marquee>
+					<!-- <div class="remark-wrap">
 						这是场所的备注一二三四五六七八九十个十百千万gdsf
-					</div>
+					</div> -->
 				</div>
 			</li>
 		</ul>
@@ -61,8 +64,10 @@ export default {
 	data(){
 		return{
 			images: [
-				require("@/assets/img/area.png"),
-				require("@/assets/img/st.jpg"),
+				require("@/assets/img/swipe1.png"),
+				require("@/assets/img/swipe2.png"),
+				require("@/assets/img/swipe3.png"),
+				require("@/assets/img/swipe4.png")
 			],
 		}
 	},
@@ -78,18 +83,18 @@ export default {
 /deep/ .van-swipe{
 	img{
 		width: 100%;
-		height: 120px;
+		max-height: 120px;
 	}
 }
 .main{
 	padding: 0 1rem;
-	.remark-wrap{
-		font-size: .8rem;
-		color: $secondary-color;
-		white-space: nowrap;
-		text-overflow: ellipsis;
-		overflow: hidden; 
-	}
+	// .remark-wrap{
+	// 	font-size: .8rem;
+	// 	color: $secondary-color;
+	// 	white-space: nowrap;
+	// 	text-overflow: ellipsis;
+	// 	overflow: hidden; 
+	// }
 	.img-wrap{
 		width: 50px;
 		max-height: 100%;

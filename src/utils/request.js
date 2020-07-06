@@ -1,23 +1,24 @@
 import axios from "axios";
-import { Message, Loading } from 'element-ui';
-import { getToKen, getUserName } from "@/utils/app";
+import { startLoading, clearToast, failToast } from './toast';
+// import { getToKen, getUserName } from "@/utils/app";
+import encryption from './encryption';
 //配置
-import { host } from "@/config/http";
+import { host } from "@/config/config";
 
 
 //声明一个对象用于存储请求个数
 let needLoadingRequestCount = 0;
 function showMyLoading() {
     if (needLoadingRequestCount === 0) {
-        myLoading();
+        startLoading();
     }
     needLoadingRequestCount++;
 };
 function HideMyLoading() {
     if (needLoadingRequestCount <= 0) return;
-    needLoadingRequestCount--;
+        needLoadingRequestCount--;
     if (needLoadingRequestCount === 0) {
-        myLoading().close();
+        clearToast();
     }
 };
 
@@ -38,16 +39,16 @@ service.interceptors.request.use(function (config) {
     // 添加等待动画
     showMyLoading();
     // 添加头部信息
-    config.headers['Content-Type'] = 'application/json';
-    if(getToKen()){
-        config.headers['token'] = getToKen();
-    }
+    config.headers['Content-Type'] = 'application/json;charset=UTF-8';
+    let { Timestamp, KEY } = encryption(`${config.baseURL}${config.url}`);
+    config.headers['timestamp'] = Timestamp;
+    config.headers['key'] = KEY;
 
     return config;
 }, function (error) {
     // 对请求错误做些什么
     HideMyLoading();
-    Message.error(error.message);
+    failToast(error.message);
     return Promise.reject(error);
 });
 
@@ -58,8 +59,8 @@ service.interceptors.response.use(function (response) {
     HideMyLoading();
     // 处理响应数据
     let res = response.data;
-    if(res.code != 20000){
-        Message.error(res.msg);
+    if(res.code != '0000'){
+        failToast(res.message);
         return Promise.reject(res);
     }else{
         return response;
@@ -67,7 +68,7 @@ service.interceptors.response.use(function (response) {
 }, function (error) {
     // 对响应错误做点什么
     HideMyLoading();
-    Message.error(error.message);
+    failToast(error.message);
     return Promise.reject(error);
 });
 

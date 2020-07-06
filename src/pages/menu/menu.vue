@@ -9,10 +9,19 @@
 		</div>
 		<div>
 			<span>第一食堂三楼中餐厅</span>
-			<div class="d-flex text-secondary">
-				<!-- <van-tag plain type="danger">食堂配送</van-tag> -->
-				当前餐别截止时间：12:00
+			<div class="d-flex justify-content-between small">
+				<div style="height: 18px;line-height: 18px;color: #ff9900;">
+					<van-icon name="star" />
+					<van-icon name="star" />
+					<van-icon name="star" />
+					<van-icon name="star" />
+					<van-icon name="star" />
+				</div>
+				<van-tag plain type="danger">食堂配送</van-tag>
 			</div>
+			<marquee class="text-secondary small">
+				<span>当前餐别截止时间：12:00</span>
+			</marquee>
 		</div>
 	</div>
 	<!-- 菜类菜品 -->
@@ -35,13 +44,14 @@
 import Header from '../../components/Header.vue';
 import menuRight from './menuRight.vue';
 import shopCar from './shopCar.vue';
-import { Sidebar, SidebarItem, Tag } from 'vant';
+import { Sidebar, SidebarItem, Tag, Icon } from 'vant';
 export default {
 	components:{
 		Header:Header,
 		[Sidebar.name]:Sidebar,
 		[SidebarItem.name]:SidebarItem,
 		[Tag.name]:Tag,
+		[Icon.name]:Icon,
 		menuRight:menuRight,
 		shopCar:shopCar
 	},
@@ -108,7 +118,6 @@ export default {
 			&>span{
 				font-weight: bolder;
 				color: $primary-color;
-				margin-bottom: 10px;
 			}
 		}
 	}
