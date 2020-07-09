@@ -40,6 +40,8 @@ export default{
 }
 </script>
 
-<style>
-	
+<style lang="scss" scoped>
+// #order{
+// 	background-color: #f5f5f5;
+// }
 </style>

@@ -1,5 +1,5 @@
 <template>
-<div>
+<div style="margin-bottom:50px;">
 	<!-- 滚动公告 -->
 	<van-notice-bar left-icon="volume-o" color="#1989fa" background="#ecf9ff" @click="show = true">
 		本系统将于2019年11月18日进行维护更新,如有不便之处,请您原谅,谢谢合作!
@@ -8,11 +8,11 @@
 	<van-overlay :show="show" @click="show = false" class="wrapper">
 		<div class="block" @click.stop>
 			<div class="overlayHead">公告</div>
-			<div>
+			<div class="pt-2 pb-2">
 				本系统将于2019年11月18日进行维护更新,如有不便之处,请您原谅,谢谢合作!
 			</div>
-			<div class="p-1 text-center border-top">
-				<button type="button" class="btn btn-success btn-sm" @click="show = false">我知道了</button>
+			<div class="p-2 text-center border-top">
+				<button type="button" class="btn btn-success" @click="show = false">我知道了</button>
 			</div>
 		</div>
 	</van-overlay>
@@ -41,25 +41,6 @@ export default {
 	data() {
 		return {
 			show: true //是否显示遮罩层
-		}
-	},
-	created(){
-		let { wxCode, wxState } = this.getUrlParams();
-		this.$store.dispatch("app/Login",{
-			qrstr: wxState,
-			code: wxCode
-		}).then(res => {
-			console.log(res);
-		}).catch();
-	},
-	methods: {
-		// 获取url的参数code和state
-		getUrlParams(){
-			let reg = /\?code=(.*)\&state=(.*)/g;
-			let execRes = reg.exec(location.search);
-			let wxCode = execRes[1];
-			let wxState = execRes[2];
-			return { wxCode, wxState };
 		}
 	}
 }

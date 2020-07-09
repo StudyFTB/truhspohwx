@@ -3,19 +3,46 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter);
 
+// 避免 router.push 相同路由的错误
+const originalPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push (location) {
+  return originalPush.call(this, location).catch(err => err)
+}
+
 export default new VueRouter({
 	mode:'hash',
 	routes:[
 		{
 			path:'/',
-			redirect:{name:"BedInfo"}
+			redirect:{name:"ScanCode"}
 		},
+		// 登录绑定模块
+		{
+			path:'/scancode',
+			name:'ScanCode',
+			component: resolve => require(['../pages/scan-code'],resolve),
+			meta:{title:'扫码成功'}
+		},
+		{
+			path:'/banding',
+			name:'Banding',
+			component: resolve => require(['../pages/banding'],resolve),
+			meta:{title:'绑定信息'}
+		},
+		// 床位模块
 		{
 			path:'/bedinfo',
 			name:'BedInfo',
 			component: resolve => require(['../pages/bed-info'],resolve),
 			meta:{title:'床位信息'}
 		},
+		{
+			path:'/bedconfirm',
+			name:'BedConfirm',
+			component: resolve => require(['../pages/bed-confirm'],resolve),
+			meta:{title:'床位绑定确认'}
+		},
+		// 订餐模块
 		{
 			path:'/type',
 			name:'Type',
@@ -52,6 +79,7 @@ export default new VueRouter({
 			component: resolve => require(['../pages/pay/pay.vue'],resolve),
 			meta:{title:'结算支付'}
 		},
+		// 订单模块
 		{
 			path:'/order',
 			name:'Order',
@@ -64,6 +92,7 @@ export default new VueRouter({
 			component: resolve => require(['../pages/orderDetail/orderDetail.vue'],resolve),
 			meta:{title:'订单详情'}
 		},
+		// 我的信息模块
 		{
 			path:'/mine',
 			name:'Mine',

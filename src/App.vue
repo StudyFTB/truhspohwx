@@ -16,7 +16,7 @@ export default {
 
 <style>
 @import url("./assets/css/bootstrap.min.css");
-@import url("//at.alicdn.com/t/font_1473431_7mn0dxqrv6t.css");
+@import url("//at.alicdn.com/t/font_1473431_cc2i02lpo4.css");
 #app {
 	font-family: 'Avenir', Helvetica, Arial, sans-serif;
 	-webkit-font-smoothing: antialiased;

@@ -1,5 +1,6 @@
 const openidKey = `patient_openid`;
 const isFirstKey = "patient_isFirst";
+const qrstrKey = 'patient_qrstr';
 
 // openid
 export const setOpenid = value => {
@@ -15,4 +16,12 @@ export const setIsFirst = value => {
 }
 export const getIsFirst = () => {
     return sessionStorage.getItem(isFirstKey);
+}
+
+// qrstr
+export const setQrstr = value => {
+    return sessionStorage.setItem(qrstrKey,value);
+}
+export const getQrstr = () => {
+    return sessionStorage.getItem(qrstrKey);
 }

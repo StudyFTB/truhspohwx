@@ -31,12 +31,9 @@
 						</div>
 						<van-tag plain type="danger">食堂配送</van-tag>
 					</div>
-					<marquee class="text-secondary">
-						<span>这是场所的备注一二三四五六七八九十个十百千万gdsf</span>
-					</marquee>
-					<!-- <div class="remark-wrap">
+					<div class="remark-wrap">
 						这是场所的备注一二三四五六七八九十个十百千万gdsf
-					</div> -->
+					</div>
 				</div>
 			</li>
 		</ul>
@@ -88,13 +85,13 @@ export default {
 }
 .main{
 	padding: 0 1rem;
-	// .remark-wrap{
-	// 	font-size: .8rem;
-	// 	color: $secondary-color;
-	// 	white-space: nowrap;
-	// 	text-overflow: ellipsis;
-	// 	overflow: hidden; 
-	// }
+	.remark-wrap{
+		font-size: .8rem;
+		color: $secondary-color;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		overflow: hidden; 
+	}
 	.img-wrap{
 		width: 50px;
 		max-height: 100%;

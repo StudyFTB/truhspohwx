@@ -4,11 +4,15 @@
     <!-- 主要页面 -->
     <div class="container pt-2">
         <div class="card p-2 mt-3">
-            <div>手机号码：{{info.phone}}</div>
-            <div>联系人：{{info.name}}</div>
+            <div>
+                <span style="width:85px;text-align:right;display:inline-block;">手机号码：</span>{{info.phone}}
+            </div>
+            <div>
+                <span style="width:85px;text-align:right;display:inline-block;">联系人：</span>{{info.name}}
+            </div>
         </div>
         <div class="mt-3">
-            <button type="button" class="btn btn-success btn-block btn-sm" @click="togglePopup()">编辑个人资料</button>
+            <button type="button" class="btn btn-success btn-block" @click="togglePopup()">编辑个人资料</button>
         </div>
     </div>
     <!-- 遮罩层 -->
@@ -17,19 +21,19 @@
             <h4 class="text-center p-2 border-bottom">编辑资料</h4>
             <div class="input-group mb-3 mt-3">
                 <div class="input-group-prepend">
-                    <span class="input-group-text">手机号码</span>
+                    <span class="input-group-text" style="width:90px">手机号码</span>
                 </div>
-                <input type="text" class="form-control" maxlength="14" placeholder="输入您的手机号码" v-model="info.phone">
+                <input type="text" class="form-control" maxlength="11" placeholder="输入您的手机号码" v-model="form.phone">
             </div>
             <div class="input-group mb-3 mt-3">
                 <div class="input-group-prepend">
-                    <span class="input-group-text">联&nbsp;&nbsp;系&nbsp;&nbsp;人</span>
+                    <span class="input-group-text" style="width:90px">联&nbsp;&nbsp;系&nbsp;&nbsp;人</span>
                 </div>
-                <input type="text" class="form-control" maxlength="5" placeholder="输入联系人姓名" v-model="info.name">
+                <input type="text" class="form-control" maxlength="6" placeholder="输入联系人姓名" v-model="form.name">
             </div>
             <div class="d-flex justify-content-around border-top pt-2">
-                <button type="button" class="btn btn-warning btn-sm" @click="togglePopup()">取消</button>
-                <button type="button" class="btn btn-danger btn-sm" @click="editInfo(info)">修改</button>
+                <button type="button" class="btn btn-warning" @click="togglePopup()">取消</button>
+                <button type="button" class="btn btn-danger" @click="editInfo()">修改</button>
             </div>
         </div>
     </van-overlay>
@@ -39,33 +43,75 @@
 <script>
 import Header from '../../components/Header';
 import { Overlay } from 'vant';
-
+import { selectWxPsnInfo, uPdateWxUser } from "@/api/user";
+import { phone, special } from '@/utils/validate';
 export default {
+    name: 'MyInfo',
     components:{
         Header:Header,
         [Overlay.name]:Overlay
     },
     data(){
         return{
-            info:{
-				'phone':1882667952,
-				'name':'张三'
+            info:{ // 用户信息
+                name: "",
+                phone: ""
+            },
+            form:{
+                name: "",
+                phone: ""
             },
             show:false
         }
     },
+    created(){
+        this.httpSelectWxPsnInfo();
+    },
     methods:{
+        // 获取用户信息的接口
+        httpSelectWxPsnInfo(){
+            selectWxPsnInfo({
+                openid: this.$store.state.app.openid
+            }).then(res => {
+                this.info.name = res.data.data.personname,
+                this.info.phone = res.data.data.phoneno
+            }).catch();
+        },
+        // 修改用户信息的接口
+        httpuPdateWxUser(){
+            uPdateWxUser({
+                openid: this.$store.state.app.openid,
+                personname: this.form.name,
+                phoneno: this.form.phone,
+                ispush: -1
+            }).then(res => {
+                this.$_tip('修改个人资料成功');
+                this.show = false;
+                this.info = Object.assign({},this.form);
+            }).catch();
+        },
         togglePopup:function(){ //切换弹出框
             this.show=!this.show;
-        },
-        editInfo:function(info){ //修改信息
-            var phonereg=/^[1][3,4,5,7,8][0-9]{9}$/;
-            if(!(phonereg.test(info.phone))){ 
-                alert("手机号码有误，请重填");  
-                return false; 
+            if(this.show){
+                this.form = Object.assign({},this.info);
             }else{
-                this.togglePopup();
+                this.form = {name: "",phone: ""};
             }
+        },
+        editInfo:function(){ //修改信息
+            if(!phone(this.form.phone)){ 
+                this.$_tip("手机号码格式错误",'fail');  
+                return false; 
+            }
+            if(special(this.form.name)){ 
+                this.$_tip("姓名不能含有特殊字符",'fail');  
+                return false; 
+            }
+            if(!this.form.name){ 
+                this.$_tip("姓名不能为空",'fail');  
+                return false; 
+            }
+            this.httpuPdateWxUser();
         }
     }
 }

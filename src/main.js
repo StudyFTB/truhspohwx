@@ -1,16 +1,14 @@
 import Vue from 'vue'
 import App from './App.vue'
-import router from './router/router.js'
+import router from './router/router.js';
+// 导航守卫
+import "@/router/navGuard";
 // vuex
 import store from '@/store';
 
-router.beforeEach((to, from, next) => {
-/* 路由发生变化修改页面title */
-	if (to.meta.title) {
-		document.title = to.meta.title;
-	}
-	next()
-})
+//全局实例方法
+import global from "@/utils/global";
+Vue.use(global);
 
 Vue.config.productionTip = false;
 

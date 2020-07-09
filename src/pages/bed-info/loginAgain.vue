@@ -1,13 +1,13 @@
 <template>
-	<div id="loginAgain" class="pr-3 pl-3 mb-3">
+	<div id="loginAgain" class="pr-3 pl-3">
 		<div class="headTip">请选择订餐床位</div>
-		<ul class="bedUl">
+		<ul class="bedUl" v-if="bedlis.length !== 0">
 			<li class="card p-2 mb-2 d-flex flex-row justify-content-between" 
-				v-for="(bedli,index) in bedlis" :key="index">
-				<span class="newMark" :class="{'d-none':index!=0}"></span>
+				v-for="(bedli) in bedlis" :key="bedli.id">
+				<span class="newMark" v-if="bedli.isnowqr==1"></span>
 				<div>
-					<div>床位：{{bedli.bedname}}</div>
-					<div>时间：{{bedli.time}}</div>
+					<div>床位：{{bedli.qrBedName}}</div>
+					<div>时间：{{bedli.createtime}}</div>
 					<div>备注：{{bedli.remark}}</div>
 				</div>
 				<div class="bedBtn p-1">
@@ -15,29 +15,46 @@
 				</div>
 			</li>
 		</ul>
+		<van-empty image="search" description="未找到任何床位，请先绑定床位" v-if="bedlis.length == 0" />
 		<div class="mt-5">
-			<van-button type="primary"  block class="mb-3">其他床位</van-button>
+			<van-button type="primary" block class="mb-3">添加床位</van-button>
 			<van-button type="info" block to="/editBed/login">床位编辑</van-button>
 		</div>
 	</div>
 </template>
 
 <script>
-	import { Button } from 'vant';
-	
-	export default{
-		components:{
-			[Button.name]:Button
-		},
-		data(){
-			return{
-				bedlis:[ //床号列表
-					{bedname:'骨创伤科2号病房5号床位',remark:'只有五个字',time:'2019-10-22 15:41'},
-					{bedname:'输血科302房2号床',remark:'只有五个字',time:'2019-10-22 15:41'}
-				],
-			}
+import { Button, Empty } from 'vant';
+export default {
+	components:{
+		[Button.name]: Button,
+		[Empty.name]: Empty
+	},
+	data(){
+		return{
+			bedlis:[], //床号列表
+		}
+	},
+	created(){
+		this.httpGetBedList();
+	},
+	activated(){
+		// 刷新标志位yes
+		if(this.$store.state.bed.isRefreshBedList == "yes"){
+			this.httpGetBedList();
+		}else{
+			this.bedlis = this.$store.state.bed.bedList;
+		}
+	},
+	methods: {
+		// 获取床位的接口
+		httpGetBedList(){
+			this.$store.dispatch('bed/GetBedList').then(res => {
+				this.bedlis = res.data.data;
+			});
 		}
 	}
+}
 </script>
 
 <style scoped>
