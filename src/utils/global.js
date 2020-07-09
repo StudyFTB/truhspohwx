@@ -24,5 +24,19 @@ export default {
                 onCancel || "";
             });
         }
+        /**
+         * 计算距离今天的日期
+         * @param {
+         * 天数
+         * } date 
+         */
+        Vue.prototype.$_setDate = date => {
+            let d = new Date();
+            d.setDate(d.getDate() + date);
+            let y = d.getFullYear();
+            let m = (d.getMonth()+1).toString().padStart(2,"0");
+            let day = d.getDate().toString().padStart(2,"0");
+            return `${y}-${m}-${day}`;
+        }
     }
 }
