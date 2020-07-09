@@ -7,6 +7,7 @@
 				<span class="newMark" v-if="bedli.isnowqr==1"></span>
 				<div>
 					<div>床位：{{bedli.qrBedName}}</div>
+					<div>医院：{{bedli.hspname}}</div>
 					<div>时间：{{bedli.createtime}}</div>
 					<div>备注：{{bedli.remark}}</div>
 				</div>

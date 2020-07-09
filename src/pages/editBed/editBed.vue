@@ -6,6 +6,7 @@
         <li class="card p-2 m-2 d-flex flex-row justify-content-between" v-for="(bedli,index) in bedlis" :key="index">
             <div>
                 <div>床位：{{bedli.qrBedName}}</div>
+                <div>医院：{{bedli.hspname}}</div>
                 <div>时间：{{bedli.createtime}}</div>
                 <div>备注：{{bedli.remark}}</div>
             </div>
@@ -25,6 +26,7 @@
                 <van-icon name="cross" @touchstart="show = false" />
             </div>
             <div class="mb-3">床位：{{modalInfo.qrBedName}}</div>
+            <div class="mb-3">医院：{{modalInfo.hspname}}</div>
             <div class="mb-3">时间：{{modalInfo.createtime}}</div>
             <div class="mb-3">
                 备注：
