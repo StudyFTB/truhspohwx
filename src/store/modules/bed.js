@@ -55,7 +55,11 @@ const actions = {
 
                 setIsRefreshBedList('no');
                 commit('SET_IS_REFRESH_BEDLIST','no');
-            }).catch();
+            }).catch(e => {
+                reject(e);
+                setBedList(JSON.stringify([]));
+                commit('SET_BEDLIST',[]);
+            });
         });
     }
 }
