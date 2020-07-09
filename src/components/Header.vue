@@ -11,7 +11,7 @@
 			@click-right="toHome"
 			class="hNavBar"
 		>
-			<van-icon name="wap-home-o" slot="right" size="1.5rem" />
+			<van-icon name="wap-home-o" slot="right" size="20px" />
 		</van-nav-bar>
 	</div>
 </template>

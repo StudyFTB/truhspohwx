@@ -12,12 +12,12 @@
             </div>
         </div>
         <div class="mt-3">
-            <button type="button" class="btn btn-success btn-block" @click="togglePopup()">编辑个人资料</button>
+            <van-button type="primary" block  @touchstart="togglePopup()">编辑个人资料</van-button>
         </div>
     </div>
     <!-- 遮罩层 -->
-    <van-overlay :show="show" @click="show = false" class="overLay">
-        <div class="bg-white rounded p-2 m-1" @click.stop="">
+    <van-overlay :show="show" @touchstart="show = false" class="overLay">
+        <div class="bg-white rounded p-2 m-1" @touchstart.stop="">
             <h4 class="text-center p-2 border-bottom">编辑资料</h4>
             <div class="input-group mb-3 mt-3">
                 <div class="input-group-prepend">
@@ -32,8 +32,8 @@
                 <input type="text" class="form-control" maxlength="6" placeholder="输入联系人姓名" v-model="form.name">
             </div>
             <div class="d-flex justify-content-around border-top pt-2">
-                <button type="button" class="btn btn-warning" @click="togglePopup()">取消</button>
-                <button type="button" class="btn btn-danger" @click="editInfo()">修改</button>
+                <van-button type="warning" @touchstart="togglePopup()">取消</van-button>
+                <van-button type="danger" @touchstart="editInfo()">修改</van-button>
             </div>
         </div>
     </van-overlay>
@@ -42,14 +42,15 @@
 
 <script>
 import Header from '../../components/Header';
-import { Overlay } from 'vant';
+import { Overlay, Button } from 'vant';
 import { selectWxPsnInfo, uPdateWxUser } from "@/api/user";
 import { phone, special } from '@/utils/validate';
 export default {
     name: 'MyInfo',
     components:{
         Header:Header,
-        [Overlay.name]:Overlay
+        [Overlay.name]:Overlay,
+        [Button.name]:Button
     },
     data(){
         return{

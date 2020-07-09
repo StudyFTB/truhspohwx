@@ -3,15 +3,14 @@
     <Header title="编辑床位"></Header>
     <!-- 主体内容 -->
     <ul class="bedUl" v-if="bedlis.length !== 0">
-        <li class="card p-2 mb-2 d-flex flex-row justify-content-between" v-for="(bedli,index) in bedlis" :key="index">
+        <li class="card p-2 m-2 d-flex flex-row justify-content-between" v-for="(bedli,index) in bedlis" :key="index">
             <div>
                 <div>床位：{{bedli.qrBedName}}</div>
                 <div>时间：{{bedli.createtime}}</div>
                 <div>备注：{{bedli.remark}}</div>
             </div>
             <div class="bedBtn p-1">
-                <button type="button" class="btn btn-success btn-sm"
-                    data-toggle="modal" data-target="#myModal" @touchstart="onManageClick(bedli)">管理</button>
+                <van-button type="warning" @touchstart="onManageClick(bedli)">管理</van-button>
             </div>
         </li>
     </ul>
@@ -28,11 +27,13 @@
             <div class="mb-3">床位：{{modalInfo.qrBedName}}</div>
             <div class="mb-3">时间：{{modalInfo.createtime}}</div>
             <div class="mb-3">
-                备注：<input type="text" maxlength="5" v-model="modalInfo.remark" placeholder="最多输入五个字"/>
+                备注：
+                <input type="text" maxlength="5" v-model="modalInfo.remark" placeholder="最多输入五个字"
+                    style="border:1px solid #999;padding:2px 5px;"/>
             </div>
             <div class="d-flex justify-content-around p-3">
-                <button type="button" class="btn btn-danger" @touchstart="onDelBed">删除床位</button>
-                <button type="button" class="btn btn-success" @touchstart="onSetBed">保存修改</button>
+                <van-button type="danger" @touchstart="onDelBed">删除床位</van-button>
+                <van-button type="primary" @touchstart="onSetBed">保存修改</van-button>
             </div>
         </div>
     </van-overlay>
@@ -67,10 +68,15 @@ export default {
         }
     },
     created(){
-        this.bedlis = this.$store.state.bed.bedList;
+        this.httpGetBedList();
     },
     activated(){
-        this.bedlis = this.$store.state.bed.bedList;
+        // 刷新标志位yes
+		if(this.$store.state.bed.isRefreshBedList == "yes"){
+			this.httpGetBedList();
+		}else{
+			this.bedlis = this.$store.state.bed.bedList;
+		}
     },
     methods:{
         // 获取床位的接口
@@ -116,7 +122,7 @@ export default {
         },
         // 点击保存修改触发
         onSetBed(){
-            if(special(this.this.modalInfo.remark)){
+            if(special(this.modalInfo.remark)){
                 this.$_tip('备注不能含有特殊字符','fail')
                 return false;
             }

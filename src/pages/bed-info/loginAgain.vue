@@ -11,7 +11,7 @@
 					<div>备注：{{bedli.remark}}</div>
 				</div>
 				<div class="bedBtn p-1">
-					<van-button type="danger" size="small" to="/area">订餐</van-button>
+					<van-button type="danger" to="/area">订餐</van-button>
 				</div>
 			</li>
 		</ul>
