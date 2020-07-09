@@ -32,8 +32,8 @@
                 <input type="text" class="form-control" maxlength="6" placeholder="输入联系人姓名" v-model="form.name">
             </div>
             <div class="d-flex justify-content-around border-top pt-2">
-                <van-button type="warning" @touchstart="togglePopup()">取消</van-button>
-                <van-button type="danger" @touchstart="editInfo()">修改</van-button>
+                <van-button type="warning" size="small" @touchstart="togglePopup()">取消</van-button>
+                <van-button type="danger" size="small" @touchstart="editInfo()">修改</van-button>
             </div>
         </div>
     </van-overlay>

@@ -10,7 +10,7 @@
                 <div>备注：{{bedli.remark}}</div>
             </div>
             <div class="bedBtn p-1">
-                <van-button type="warning" @touchstart="onManageClick(bedli)">管理</van-button>
+                <van-button type="warning" size="small" @touchstart="onManageClick(bedli)">管理</van-button>
             </div>
         </li>
     </ul>
@@ -32,8 +32,8 @@
                     style="border:1px solid #999;padding:2px 5px;"/>
             </div>
             <div class="d-flex justify-content-around p-3">
-                <van-button type="danger" @touchstart="onDelBed">删除床位</van-button>
-                <van-button type="primary" @touchstart="onSetBed">保存修改</van-button>
+                <van-button type="danger" size="small" @touchstart="onDelBed">删除床位</van-button>
+                <van-button type="primary" size="small" @touchstart="onSetBed">保存修改</van-button>
             </div>
         </div>
     </van-overlay>
