@@ -37,6 +37,11 @@ const actions = {
                 reject(e);
             });
         });
+    },
+    // 绑定床位时，设置qrstr
+    SetQrstr({ commit },value){
+        setQrstr(value);
+        commit("SET_QRSTR",value);
     }
 }
 

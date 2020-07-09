@@ -11,13 +11,13 @@
 					<div>备注：{{bedli.remark}}</div>
 				</div>
 				<div class="bedBtn p-1">
-					<van-button type="danger" size="small" to="/area">订餐</van-button>
+					<van-button type="danger" size="small" @touchstart="onDCClick(bedli.qrstr)">订餐</van-button>
 				</div>
 			</li>
 		</ul>
 		<van-empty image="search" description="未找到任何床位，请先绑定床位" v-if="bedlis.length == 0" />
 		<div class="mt-5">
-			<van-button type="primary" block class="mb-3">添加床位</van-button>
+			<van-button type="primary" block class="mb-3" @touchstart="onScan">添加床位</van-button>
 			<van-button type="info" block to="/editBed/login">床位编辑</van-button>
 		</div>
 	</div>
@@ -25,11 +25,13 @@
 
 <script>
 import { Button, Empty } from 'vant';
+import wxScan from '@/mixin/wxScan';
 export default {
 	components:{
 		[Button.name]: Button,
 		[Empty.name]: Empty
 	},
+	mixins: [wxScan],
 	data(){
 		return{
 			bedlis:[], //床号列表
@@ -52,6 +54,12 @@ export default {
 			this.$store.dispatch('bed/GetBedList').then(res => {
 				this.bedlis = res.data.data;
 			});
+		},
+		// 点击订餐按钮触发
+		onDCClick(qrstr){
+			this.$store.dispatch('wxdc/SetQrstr',qrstr);
+			this.$store.dispatch('wxdc/SetRefreshArea','yes');
+			this.$router.push('/area');
 		}
 	}
 }

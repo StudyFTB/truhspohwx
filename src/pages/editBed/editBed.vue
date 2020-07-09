@@ -16,7 +16,7 @@
     </ul>
     <van-empty image="search" description="未找到任何床位，请先绑定床位" v-if="bedlis.length == 0" />
     <div class="p-3 mt-3">
-        <van-button type="primary" block>添加床位</van-button>
+        <van-button type="primary" block @touchstart="onScan">添加床位</van-button>
     </div>
     <!-- 遮罩层 -->
     <van-overlay :show="show" @touchstart="show = false" class="overLay">
@@ -45,6 +45,7 @@ import Header from '../../components/Header';
 import { Overlay,Icon,Empty, Button } from 'vant';
 import { uPdatePsnBed, delPsnBed } from '@/api/bed';
 import { special } from '@/utils/validate';
+import wxScan from '@/mixin/wxScan';
 export default {
     name: 'EditBed',
     components:{
@@ -54,6 +55,7 @@ export default {
         [Empty.name]: Empty,
         [Button.name]: Button
     },
+    mixins: [wxScan],
     data(){
         return{
             hiddenHome:false, //头部标题是否显示

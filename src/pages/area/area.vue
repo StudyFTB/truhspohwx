@@ -13,13 +13,13 @@
 			<strong class="d-block mb-2">
 				可选商家
 			</strong>
-			<li class="d-flex justify-content-between" @click="toNext">
+			<li class="d-flex justify-content-between" v-for="item in areaList" :key="item.id" @click="toNext">
 				<div class="d-flex flex-column justify-content-center">
-					<img src="../../assets/img/st.jpg" class="d-block border round img-wrap" />
+					<img :src="item.ctimgurl || defaultImgSrc" class="d-block border round img-wrap" />
 				</div>
 				<div class="areaName">
 					<div class="font-weight-bold">
-						第一食堂三楼职工食堂
+						{{item.ctname}}
 					</div>
 					<div class="d-flex justify-content-between small">
 						<div style="height: 18px;line-height: 18px;color: #ff9900;">
@@ -29,10 +29,10 @@
 							<van-icon name="star" />
 							<van-icon name="star" />
 						</div>
-						<van-tag plain type="danger">食堂配送</van-tag>
+						<van-tag plain type="danger">商家配送</van-tag>
 					</div>
 					<div class="remark-wrap">
-						这是场所的备注一二三四五六七八九十个十百千万gdsf
+						{{item.ctdesc}}
 					</div>
 				</div>
 			</li>
@@ -43,14 +43,14 @@
 
 <script>
 import Header from '../../components/Header.vue';
-import { Icon } from 'vant';
-import { Tag, Swipe, SwipeItem } from 'vant';
+import { Icon, Tag, Swipe, SwipeItem } from 'vant';
+import { getAreaList } from '@/api/wxdc';
 
 import Vue from 'vue';
 import { Lazyload } from 'vant';
 Vue.use(Lazyload);
-
 export default {
+	name: 'Area',
 	components:{
 		Header:Header,
 		[Icon.name]:Icon,
@@ -60,15 +60,35 @@ export default {
 	},
 	data(){
 		return{
+			defaultImgSrc: require('@/assets/img/defaultsj.png'), // 默认商家图片
 			images: [
 				require("@/assets/img/swipe1.png"),
 				require("@/assets/img/swipe2.png"),
 				require("@/assets/img/swipe3.png"),
 				require("@/assets/img/swipe4.png")
 			],
+			areaList:'' // 食堂信息列表
+		}
+	},
+	created(){
+		this.httpGetAreaList();
+	},
+	activated(){
+		if(this.$store.state.wxdc.refreshArea == 'yes'){
+			this.httpGetAreaList();
 		}
 	},
 	methods:{
+		// 获取食堂的接口
+		httpGetAreaList(){
+			getAreaList({
+				openid: this.$store.state.app.openid,
+				qrstr: this.$store.state.wxdc.qrstr
+			}).then(res => {
+				this.areaList = res.data.data;
+				this.$store.dispatch('wxdc/SetRefreshArea','no');
+			}).catch();
+		},
 		toNext(){ //去下一级
 			this.$router.push("/date");
 		}

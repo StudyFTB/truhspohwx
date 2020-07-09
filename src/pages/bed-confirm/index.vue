@@ -51,6 +51,7 @@ export default {
                 if(e.code == '1010'){
                     this.$router.replace("/bedinfo");
                     this.$store.dispatch('bed/SetReFresh','yes');
+                    this.$store.dispatch('bed/SetReFresh','yes');
                 }
             });
         },
