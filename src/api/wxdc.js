@@ -14,3 +14,21 @@ export const getAreaList = params => {
         params
     })
 }
+
+/**
+ * 查询订餐餐别列表信息
+ * @param {
+ * openid
+ * qrstr
+ * ctid
+ * advday
+ * dates
+ * } data 
+ */
+export const getRepastAllDates = data => {
+    return service.request({
+        method: 'post',
+        url: '/wxdc/selectRepastAllDates',
+        data
+    })
+}

@@ -14,9 +14,18 @@ const getRefreshArea = () => {
     return sessionStorage.getItem(refreshAreaKey);
 }
 
+const refreshDateKey = 'patient_wxdc_refreshDate';
+const setRefreshDate = value => {
+    return sessionStorage.setItem(refreshDateKey,value)
+}
+const getRefreshDate = () => {
+    return sessionStorage.getItem(refreshDateKey);
+}
+
 const state = {
     qrstr: getQrstr() || '', // 选中床位的床位号
-    refreshArea: getRefreshArea() || 'no' // 是否刷新食堂信息
+    refreshArea: getRefreshArea() || 'no', // 是否刷新食堂信息
+    refreshDate: getRefreshDate() || 'no' // 是否刷新日期餐别信息
 }
 
 const mutations = {
@@ -25,6 +34,9 @@ const mutations = {
     },
     SET_REFRESHAREA: (state,value) => {
         state.refreshArea = value;
+    },
+    SET_REFRESHDATE: (state,value) => {
+        state.refreshDate = value;
     }
 }
 
@@ -38,6 +50,11 @@ const actions = {
     SetRefreshArea({commit},value){
         setRefreshArea(value);
         commit('SET_REFRESHAREA',value);
+    },
+    // 设置refreshDate
+    SetRefreshDate({commit},value){
+        setRefreshDate(value);
+        commit('SET_REFRESHDATE',value);
     }
 }
 

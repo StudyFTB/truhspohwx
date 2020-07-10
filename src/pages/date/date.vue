@@ -7,34 +7,35 @@
 		<!-- 选择 -->
 		<div>
 			<div class="time">
-				<div v-for="(date,index) in dateFormat" :key="index" class="dateBox" :class="{dateAct:dateAct==index}" @click="choDate(index)">
-					<div class="dateMonth">{{date.month}}</div>
-					<div class="dateDate">{{date.date}}</div>
-					<div class="dateWeek">{{date.week}}</div>
+				<div v-for="(item,index) in needDates" :key="item.id" class="dateBox" :class="{dateAct:dateAct==index}" @click="choDate(index)">
+					<div class="dateMonth">{{item.YearMonth}}</div>
+					<div class="dateDate">{{item.date}}</div>
+					<div class="dateWeek">{{item.week}}</div>
 				</div>
 			</div>
-			<table class="table table-sm border">
+			<table class="table table-sm border" 
+				v-if="needDates.length !== 0 && needDates[dateAct].repasts.length !== 0">
 				<thead>
 					<tr>
 						<th>餐别</th>
-						<th>已订份数</th>
 						<th>截止时间</th>
 						<th>操作</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr v-for="(mealNum,index) in mealNums" :key="index">
-						<td>{{mealNum.meal}}</td>
-						<td>{{mealNum.num}}</td>
-						<td>{{mealNum.stopTime}}</td>
+					<tr v-for="item in needDates[dateAct].repasts" :key="item.id">
+						<td>{{item.repastname}}</td>
+						<td>{{item.endtime}}</td>
 						<td>
 							<button type="button" class="btn btn-warning btn-sm" @click="toMenu">
-								订{{mealNum.meal}}
+								订{{item.repastname}}
 							</button>
 						</td>
 					</tr>
 				</tbody>
 			</table>
+			<!-- 空状态 -->
+			<van-empty v-else image="search" description="暂无可订餐别" />
 		</div>
 		<!-- 说明 -->
 		<div class="tip-wrap">
@@ -68,52 +69,90 @@
 </template>
 
 <script>
-	import Header from '../../components/Header.vue';
-	export default{
-		components:{
-			Header:Header
+import Header from '../../components/Header.vue';
+import { Empty } from 'vant';
+import { getRepastAllDates } from '@/api/wxdc';
+export default {
+	name: 'Date',
+	components:{
+		Header: Header,
+		[Empty.name]: Empty
+	},
+	data(){
+		return{
+			lctnName:'第一食堂',
+			areaName:'三楼中餐厅',
+			apiDates:[], // 接口用的日期数组
+			needDates:[],
+			dateAct:0, //点击的日期
+		}
+	},
+	created(){
+		this.computedDates();
+		this.httpGetRepastAllDates();
+	},
+	activated() {
+		if(this.$store.state.wxdc.refreshDate !== 'yes') return false;
+		this.computedDates();
+		this.httpGetRepastAllDates();
+	},
+	methods:{
+		// 请求餐别的接口
+		httpGetRepastAllDates(){
+			let ctid = parseInt(this.$route.query.ctid);
+			let advday = parseInt(this.$route.query.advday);
+			getRepastAllDates({
+				openid: this.$store.state.app.openid,
+				qrstr: this.$store.state.wxdc.qrstr,
+				ctid,
+				advday,
+				dates: this.apiDates
+			}).then(res => {
+				this.formatDates(res.data.data);
+				this.$store.dispatch('wxdc/SetRefreshDate','no');
+			}).catch();
 		},
-		data(){
-			return{
-				lctnName:'第一食堂',
-				areaName:'三楼中餐厅',
-				dates:[
-					{date:"2019-08-07",week:"星期三",num:[
-						{meal:"早餐",num:51,stopTime:"18:00"},
-						{meal:"午餐",num:41,stopTime:"18:00"},
-						{meal:"晚餐",num:45,stopTime:"18:00"}
-					]},
-					{date:"2019-08-08",week:"星期四",num:[
-						{meal:"早餐",num:10,stopTime:"18:00"},
-						{meal:"午餐",num:50,stopTime:"18:00"},
-						{meal:"晚餐",num:20,stopTime:"18:00"}
-					]}
-				],
-				dateFormat:[], //订餐日期的格式
-				dateAct:0, //点击的日期
-				mealNums:[]  //订餐的餐别数量
+		// 计算出日期的数组
+		computedDates(){
+			let advday = parseInt(this.$route.query.advday); // 今天可订几天后的
+			let dcdaycount = parseInt(this.$route.query.dcdaycount); // 可订天数
+			this.apiDates = [];
+			for(let i=advday; i<(advday+dcdaycount);i++){
+				this.apiDates.push(this.$_setDate(i));
 			}
 		},
-		created() {
-			this.mealNums=this.dates[0].num;
-			for(let i in this.dates){
-				this.dateFormat[i]={
-					month:this.dates[i].date.slice(0,7),
-					date:this.dates[i].date.slice(8),
-					week:this.dates[i].week
+		// 格式化数据，方便渲染
+		formatDates(data){
+			this.needDates = [];
+			for(let item of data){
+				let YearMonth = item.dcDate.slice(0,7);
+				let date = item.dcDate.slice(8);
+				let week = '';
+				switch(new Date(item.dcDate).getDay()){
+					case 0: week = '星期日'; break;
+					case 1: week = '星期一'; break;
+					case 2: week = '星期二'; break;
+					case 3: week = '星期三'; break;
+					case 4: week = '星期四'; break;
+					case 5: week = '星期五'; break;
+					case 6: week = '星期六'; break;
 				}
+				this.needDates.push({
+					YearMonth,date,week,
+					repasts: item.repasts
+				});
 			}
 		},
-		methods:{
-			choDate(index){
-				this.dateAct=index;
-				this.mealNums=this.dates[index].num;
-			},
-			toMenu(){
-				this.$router.push("/menu");
-			}
+		// 点击日期触发
+		choDate(index){
+			this.dateAct=index;
+		},
+		// 点击订餐餐别触发
+		toMenu(){
+			this.$router.push("/menu");
 		}
 	}
+}
 </script>
 
 <style lang="scss" scoped>

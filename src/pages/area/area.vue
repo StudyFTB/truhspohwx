@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="all-wrap">
 	<!-- 头部标题 -->
 	<Header title="选择商家"></Header>
 	<van-swipe :autoplay="3000" :show-indicators="false">
@@ -8,12 +8,12 @@
 		</van-swipe-item>
 	</van-swipe>
 	<!-- 主体部分 -->
-	<div class="main pt-2">
-		<ul class="ulBox">
-			<strong class="d-block mb-2">
-				可选商家
-			</strong>
-			<li class="d-flex justify-content-between" v-for="item in areaList" :key="item.id" @click="toNext">
+	<div class="main">
+		<strong class="d-block">
+			可选商家
+		</strong>
+		<ul class="ulBox" v-if="areaList.length !== 0">
+			<li class="d-flex justify-content-between" v-for="item in areaList" :key="item.id" @touchstart="onAreaCLick(item)">
 				<div class="d-flex flex-column justify-content-center">
 					<img :src="item.ctimgurl || defaultImgSrc" class="d-block border round img-wrap" />
 				</div>
@@ -37,13 +37,15 @@
 				</div>
 			</li>
 		</ul>
+		<!-- 空状态 -->
+		<van-empty v-else-if="areaList.length === 0" image="search" description="暂无商家" />
 	</div>
 </div>
 </template>
 
 <script>
 import Header from '../../components/Header.vue';
-import { Icon, Tag, Swipe, SwipeItem } from 'vant';
+import { Icon, Tag, Swipe, SwipeItem, Empty } from 'vant';
 import { getAreaList } from '@/api/wxdc';
 
 import Vue from 'vue';
@@ -57,6 +59,7 @@ export default {
 		[Tag.name]:Tag,
 		[Swipe.name]:Swipe,
 		[SwipeItem.name]:SwipeItem,
+		[Empty.name]:Empty,
 	},
 	data(){
 		return{
@@ -67,7 +70,7 @@ export default {
 				require("@/assets/img/swipe3.png"),
 				require("@/assets/img/swipe4.png")
 			],
-			areaList:'' // 食堂信息列表
+			areaList:[] // 食堂信息列表
 		}
 	},
 	created(){
@@ -89,14 +92,26 @@ export default {
 				this.$store.dispatch('wxdc/SetRefreshArea','no');
 			}).catch();
 		},
-		toNext(){ //去下一级
-			this.$router.push("/date");
+		// 点击商家触发
+		onAreaCLick(item){
+			this.$store.dispatch('wxdc/SetRefreshDate','yes')
+			this.$router.push({ 
+				path: "/date", 
+				query: { advday: item.advday, ctid: item.ctid, dcdaycount: item.dcdaycount } 
+			});
 		}
 	}
 }
 </script>
 
 <style lang="scss" scoped>
+.all-wrap{
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
 /deep/ .van-swipe{
 	img{
 		width: 100%;
@@ -105,6 +120,16 @@ export default {
 }
 .main{
 	padding: 0 1rem;
+	height: calc(100% - 166px);
+	overflow: auto;
+	&>strong{
+		position: sticky;
+		top: 0;
+		background-color: #fff;
+		z-index: 999;
+		padding: 10px 0;
+		border-bottom: 1px solid $border-color;
+	}
 	.remark-wrap{
 		font-size: .8rem;
 		color: $secondary-color;
