@@ -74,7 +74,7 @@ export default {
 		}
 	},
 	created(){
-		this.httpGetAreaList();
+		if(this.$store.state.wxdc.refreshArea !== 'yes') this.httpGetAreaList();
 	},
 	activated(){
 		if(this.$store.state.wxdc.refreshArea == 'yes'){

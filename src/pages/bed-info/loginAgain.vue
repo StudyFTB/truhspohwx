@@ -19,7 +19,7 @@
 		<van-empty image="search" description="未找到任何床位，请先绑定床位" v-if="bedlis.length == 0" />
 		<div class="mt-5">
 			<van-button type="primary" block class="mb-3" @touchstart="onScan">添加床位</van-button>
-			<van-button type="info" block to="/editBed/login">床位编辑</van-button>
+			<van-button type="info" block to="/editBed">床位编辑</van-button>
 		</div>
 	</div>
 </template>

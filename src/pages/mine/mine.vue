@@ -107,8 +107,7 @@ export default {
             this.$router.push("/myInfo");
         },
         toEditBed:function(){ //点击我的床位去编辑床位
-            const before='mine';
-            this.$router.push({path:`/editBed/${before}`});
+            this.$router.push({path:`/editBed`});
         },
         // 点击解除绑定触发
         onUnbind(){

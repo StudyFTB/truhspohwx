@@ -106,7 +106,7 @@ export default new VueRouter({
 			meta:{title:'我的资料'}
 		},
 		{
-			path:'/editBed/:before',
+			path:'/editBed',
 			name:'EditBed',
 			component: resolve => require(['../pages/editBed/editBed.vue'],resolve),
 			meta:{title:'编辑床位'}

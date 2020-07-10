@@ -88,6 +88,7 @@ export default {
 		}
 	},
 	created(){
+		if(this.$store.state.wxdc.refreshDate === 'yes')  return false;
 		this.computedDates();
 		this.httpGetRepastAllDates();
 	},
