@@ -8,11 +8,11 @@
         </div>
     </div>
     <div class="function pb-2 pt-2">
-        <div class="mb-2" @touchstart="toOrder()">
+        <div class="mb-2" @click="toOrder()">
             <div class="bg-primary"></div>
             <div>我的订单</div>
         </div>
-        <div class="border-bottom" @touchstart="toMyInfo()">
+        <div class="border-bottom" @click="toMyInfo()">
             <div class="bg-danger"></div>
             <div>我的资料</div>
         </div>
@@ -21,11 +21,11 @@
             <div>我的积分</div>
             <div class="jifen ml-3">{{userInfo.integral}}</div>
         </div>
-        <div class="mb-2" @touchstart="toEditBed()">
+        <div class="mb-2" @click="toEditBed()">
             <div class="bg-info"></div>
             <div>我的床位</div>
         </div>
-        <div @touchstart="onUnbind">
+        <div @click="onUnbind">
             <div class="bg-danger d-flex justify-content-center align-items-center">
                 <i class="iconfont iconjiechubangding text-white" style="font-size:1.3rem;"></i>
             </div>
@@ -36,7 +36,7 @@
                 <i class="iconfont iconlaba text-white" style="font-size:1.3rem;"></i>
             </div>
             <div>提醒功能</div>
-            <div class="tipSwitch" @touchstart="toggleSwitch()">
+            <div class="tipSwitch" @click="toggleSwitch()">
                 <i class="iconfont iconkaiguan-kai openSwitch" v-show="userInfo.ispush == 1"></i>
                 <i class="iconfont iconkaiguan-guan closeSwitch" v-show="userInfo.ispush == 0"></i>
             </div>

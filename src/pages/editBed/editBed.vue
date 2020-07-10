@@ -11,19 +11,19 @@
                 <div>备注：{{bedli.remark}}</div>
             </div>
             <div class="bedBtn p-1">
-                <van-button type="warning" size="small" @touchstart="onManageClick(bedli)">管理</van-button>
+                <van-button type="warning" size="small" @click="onManageClick(bedli)">管理</van-button>
             </div>
         </li>
     </ul>
     <van-empty image="search" description="未找到任何床位，请先绑定床位" v-if="bedlis.length == 0" />
     <div class="p-3 mt-3">
-        <van-button type="primary" block @touchstart="onScan">添加床位</van-button>
+        <van-button type="primary" block @click="onScan">添加床位</van-button>
     </div>
     <!-- 遮罩层 -->
-    <van-overlay :show="show" @touchstart="show = false" class="overLay">
-        <div class="wrap" @touchstart.stop="">
+    <van-overlay :show="show" @click="show = false" class="overLay">
+        <div class="wrap" @click.stop="">
             <div class="d-flex justify-content-end pb-2">
-                <van-icon name="cross" @touchstart="show = false" />
+                <van-icon name="cross" @click="show = false" />
             </div>
             <div class="mb-3">床位：{{modalInfo.qrBedName}}</div>
             <div class="mb-3">医院：{{modalInfo.hspname}}</div>
@@ -34,8 +34,8 @@
                     style="border:1px solid #999;padding:2px 5px;"/>
             </div>
             <div class="d-flex justify-content-around p-3">
-                <van-button type="danger" size="small" @touchstart="onDelBed">删除床位</van-button>
-                <van-button type="primary" size="small" @touchstart="onSetBed">保存修改</van-button>
+                <van-button type="danger" size="small" @click="onDelBed">删除床位</van-button>
+                <van-button type="primary" size="small" @click="onSetBed">保存修改</van-button>
             </div>
         </div>
     </van-overlay>

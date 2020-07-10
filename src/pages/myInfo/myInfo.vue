@@ -12,12 +12,12 @@
             </div>
         </div>
         <div class="mt-3">
-            <van-button type="primary" block  @touchstart="togglePopup()">编辑个人资料</van-button>
+            <van-button type="primary" block  @click="togglePopup()">编辑个人资料</van-button>
         </div>
     </div>
     <!-- 遮罩层 -->
-    <van-overlay :show="show" @touchstart="show = false" class="overLay">
-        <div class="bg-white rounded p-2 m-1" @touchstart.stop="">
+    <van-overlay :show="show" @click="show = false" class="overLay">
+        <div class="bg-white rounded p-2 m-1" @click.stop="">
             <h4 class="text-center p-2 border-bottom">编辑资料</h4>
             <div class="input-group mb-3 mt-3">
                 <div class="input-group-prepend">
@@ -32,8 +32,8 @@
                 <input type="text" class="form-control" maxlength="6" placeholder="输入联系人姓名" v-model="form.name">
             </div>
             <div class="d-flex justify-content-around border-top pt-2">
-                <van-button type="warning" size="small" @touchstart="togglePopup()">取消</van-button>
-                <van-button type="danger" size="small" @touchstart="editInfo()">修改</van-button>
+                <van-button type="warning" size="small" @click="togglePopup()">取消</van-button>
+                <van-button type="danger" size="small" @click="editInfo()">修改</van-button>
             </div>
         </div>
     </van-overlay>

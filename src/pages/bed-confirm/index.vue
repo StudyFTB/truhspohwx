@@ -5,7 +5,7 @@
         <div>床位类型：{{bedInfo.bedtype}}</div>
         <div>床位名称：{{bedInfo.qrBedName}}</div>
         <div>医院名称：{{bedInfo.hspname}}</div>
-        <van-button type="primary" block style="margin:30px 0" @touchstart="onBanding">
+        <van-button type="primary" block style="margin:30px 0" @click="onBanding">
             确定绑定床位
         </van-button>
     </div>

@@ -13,7 +13,7 @@
 			可选商家
 		</strong>
 		<ul class="ulBox" v-if="areaList.length !== 0">
-			<li class="d-flex justify-content-between" v-for="item in areaList" :key="item.id" @touchstart="onAreaCLick(item)">
+			<li class="d-flex justify-content-between" v-for="item in areaList" :key="item.id" @click="onAreaCLick(item)">
 				<div class="d-flex flex-column justify-content-center">
 					<img :src="item.ctimgurl || defaultImgSrc" class="d-block border round img-wrap" />
 				</div>

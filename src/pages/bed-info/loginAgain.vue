@@ -12,13 +12,13 @@
 					<div>备注：{{bedli.remark}}</div>
 				</div>
 				<div class="bedBtn p-1">
-					<van-button type="danger" size="small" @touchstart="onDCClick(bedli.qrstr)">订餐</van-button>
+					<van-button type="danger" size="small" @click="onDCClick(bedli.qrstr)">订餐</van-button>
 				</div>
 			</li>
 		</ul>
 		<van-empty image="search" description="未找到任何床位，请先绑定床位" v-if="bedlis.length == 0" />
 		<div class="mt-5">
-			<van-button type="primary" block class="mb-3" @touchstart="onScan">添加床位</van-button>
+			<van-button type="primary" block class="mb-3" @click="onScan">添加床位</van-button>
 			<van-button type="info" block to="/editBed">床位编辑</van-button>
 		</div>
 	</div>
