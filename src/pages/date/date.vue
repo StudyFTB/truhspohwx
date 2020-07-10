@@ -1,7 +1,7 @@
 <template>
 <div>
 	<!-- 头部标题 -->
-	<Header :title="`${lctnName}-${areaName}`"></Header>
+	<Header :title="`${$route.query.ctname}`"></Header>
 	<!-- 主体部分 -->
 	<div class="pl-3 pr-3 mb-3 pt-2">
 		<!-- 选择 -->
@@ -80,8 +80,6 @@ export default {
 	},
 	data(){
 		return{
-			lctnName:'第一食堂',
-			areaName:'三楼中餐厅',
 			apiDates:[], // 接口用的日期数组
 			needDates:[],
 			dateAct:0, //点击的日期

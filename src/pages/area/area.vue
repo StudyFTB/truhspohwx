@@ -97,7 +97,12 @@ export default {
 			this.$store.dispatch('wxdc/SetRefreshDate','yes')
 			this.$router.push({ 
 				path: "/date", 
-				query: { advday: item.advday, ctid: item.ctid, dcdaycount: item.dcdaycount } 
+				query: { 
+					advday: item.advday, 
+					ctid: item.ctid, 
+					dcdaycount: item.dcdaycount,
+					ctname: item.ctname
+				} 
 			});
 		}
 	}
