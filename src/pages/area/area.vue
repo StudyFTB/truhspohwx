@@ -63,7 +63,7 @@ export default {
 	},
 	data(){
 		return{
-			defaultImgSrc: require('@/assets/img/defaultsj.png'), // 默认商家图片
+			defaultImgSrc: require('@/assets/img/defaultsj.jpg'), // 默认商家图片
 			images: [
 				require("@/assets/img/swipe1.png"),
 				require("@/assets/img/swipe2.png"),
@@ -74,12 +74,14 @@ export default {
 		}
 	},
 	created(){
-		if(this.$store.state.wxdc.refreshArea !== 'yes') this.httpGetAreaList();
+		if(this.$store.state.wxdc.refreshArea === 'yes') return false;
+		this.areaList = [];
+		this.httpGetAreaList();
 	},
 	activated(){
-		if(this.$store.state.wxdc.refreshArea == 'yes'){
-			this.httpGetAreaList();
-		}
+		if(this.$store.state.wxdc.refreshArea !== 'yes') return false;
+		this.areaList = [];
+		this.httpGetAreaList();
 	},
 	methods:{
 		// 获取食堂的接口
@@ -94,16 +96,11 @@ export default {
 		},
 		// 点击商家触发
 		onAreaCLick(item){
-			this.$store.dispatch('wxdc/SetRefreshDate','yes')
-			this.$router.push({ 
-				path: "/date", 
-				query: { 
-					advday: item.advday, 
-					ctid: item.ctid, 
-					dcdaycount: item.dcdaycount,
-					ctname: item.ctname
-				} 
-			});
+			// 设置刷新日期
+			this.$store.dispatch('wxdc/SetRefreshDate','yes');
+			// 保存选择的商家信息
+			this.$store.dispatch('wxdc/SetAreaData',item);
+			this.$router.push({ path: "/date" });
 		}
 	}
 }

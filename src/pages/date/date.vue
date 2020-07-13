@@ -1,7 +1,7 @@
 <template>
 <div>
 	<!-- 头部标题 -->
-	<Header :title="`${$route.query.ctname}`"></Header>
+	<Header :title="`${$store.state.wxdc.areaData.ctname}`"></Header>
 	<!-- 主体部分 -->
 	<div class="pl-3 pr-3 mb-3 pt-2">
 		<!-- 选择 -->
@@ -27,7 +27,7 @@
 						<td>{{item.repastname}}</td>
 						<td>{{item.endtime}}</td>
 						<td>
-							<button type="button" class="btn btn-warning btn-sm" @click="toMenu">
+							<button type="button" class="btn btn-warning btn-sm" @click="toMenu(item)">
 								订{{item.repastname}}
 							</button>
 						</td>
@@ -87,24 +87,26 @@ export default {
 	},
 	created(){
 		if(this.$store.state.wxdc.refreshDate === 'yes')  return false;
+		this.apiDates = [];
+		this.needDates = [];
 		this.computedDates();
 		this.httpGetRepastAllDates();
 	},
 	activated() {
 		if(this.$store.state.wxdc.refreshDate !== 'yes') return false;
+		this.apiDates = [];
+		this.needDates = [];
 		this.computedDates();
 		this.httpGetRepastAllDates();
 	},
 	methods:{
 		// 请求餐别的接口
 		httpGetRepastAllDates(){
-			let ctid = parseInt(this.$route.query.ctid);
-			let advday = parseInt(this.$route.query.advday);
 			getRepastAllDates({
 				openid: this.$store.state.app.openid,
 				qrstr: this.$store.state.wxdc.qrstr,
-				ctid,
-				advday,
+				ctid: this.$store.state.wxdc.areaData.ctid,
+				advday: this.$store.state.wxdc.areaData.advday,
 				dates: this.apiDates
 			}).then(res => {
 				this.formatDates(res.data.data);
@@ -113,8 +115,8 @@ export default {
 		},
 		// 计算出日期的数组
 		computedDates(){
-			let advday = parseInt(this.$route.query.advday); // 今天可订几天后的
-			let dcdaycount = parseInt(this.$route.query.dcdaycount); // 可订天数
+			let advday = this.$store.state.wxdc.areaData.advday; // 今天可订几天后的
+			let dcdaycount = this.$store.state.wxdc.areaData.dcdaycount; // 可订天数
 			this.apiDates = [];
 			for(let i=advday; i<(advday+dcdaycount);i++){
 				this.apiDates.push(this.$_setDate(i));
@@ -138,6 +140,7 @@ export default {
 				}
 				this.needDates.push({
 					YearMonth,date,week,
+					dcDate: item.dcDate,
 					repasts: item.repasts
 				});
 			}
@@ -147,8 +150,16 @@ export default {
 			this.dateAct=index;
 		},
 		// 点击订餐餐别触发
-		toMenu(){
-			this.$router.push("/menu");
+		toMenu(repast){
+			this.$store.dispatch('wxdc/SetRefreshMenu','yes')
+			this.$router.push({
+				path: "/menu",
+				query:{
+					repastid: repast.repastid,
+					repastname: repast.repastname,
+					date: this.needDates[this.dateAct].dcDate
+				}
+			});
 		}
 	}
 }

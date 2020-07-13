@@ -22,10 +22,28 @@ const getRefreshDate = () => {
     return sessionStorage.getItem(refreshDateKey);
 }
 
+const areaDataKey = 'patient_wxdc_areaData';
+const setAreaData = value => {
+    return sessionStorage.setItem(areaDataKey,value)
+}
+const getAreaData = () => {
+    return sessionStorage.getItem(areaDataKey);
+}
+
+const refreshMenuKey = 'patient_wxdc_refreshMenu';
+const setRefreshMenu = value => {
+    return sessionStorage.setItem(refreshMenuKey,value)
+}
+const getRefreshMenu = () => {
+    return sessionStorage.getItem(refreshMenuKey);
+}
+
 const state = {
     qrstr: getQrstr() || '', // 选中床位的床位号
     refreshArea: getRefreshArea() || 'no', // 是否刷新食堂信息
-    refreshDate: getRefreshDate() || 'no' // 是否刷新日期餐别信息
+    areaData: JSON.parse(getAreaData()) || "", // 选择的商家的信息
+    refreshDate: getRefreshDate() || 'no', // 是否刷新日期餐别信息
+    refreshMenu: getRefreshMenu() || 'no' // 是否刷新菜单信息
 }
 
 const mutations = {
@@ -37,6 +55,12 @@ const mutations = {
     },
     SET_REFRESHDATE: (state,value) => {
         state.refreshDate = value;
+    },
+    SET_AREADATA: (state,value) => {
+        state.areaData = value;
+    },
+    SET_REFRESHMENU: (state,value) => {
+        state.refreshMenu = value;
     }
 }
 
@@ -55,6 +79,16 @@ const actions = {
     SetRefreshDate({commit},value){
         setRefreshDate(value);
         commit('SET_REFRESHDATE',value);
+    },
+    // 设置areaData
+    SetAreaData({commit},value){
+        setAreaData(JSON.stringify(value));
+        commit('SET_AREADATA',value)
+    },
+    // 设置refreshMenu
+    SetRefreshMenu({commit},value){
+        setRefreshMenu(value);
+        commit('SET_REFRESHMENU',value);
     }
 }
 

@@ -110,6 +110,10 @@ export default {
                 this.$_tip('删除成功');
                 this.show = false;
                 this.httpGetBedList();
+                // 如果删除的qrstr是当前扫码的qrstr
+                if(this.modalInfo.qrstr === this.$store.state.app.qrstr){
+                    this.$store.dispatch('app/SetQrstr','TRUHWXGZH');
+                }
             }).catch();
         },
         // 点击管理按钮触发

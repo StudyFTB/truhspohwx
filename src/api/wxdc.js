@@ -32,3 +32,32 @@ export const getRepastAllDates = data => {
         data
     })
 }
+/**
+ * 查询订餐菜类列表信息
+ * @param {
+ * ctid
+ * } params 
+ */
+export const gettMenuTypeList = params => {
+    return service.request({
+        method: 'get',
+        url: '/wxdc/selectMenuTypeList',
+        params
+    })
+}
+/**
+ * 查询订餐菜谱列表信息
+ * @param {
+ * ctid
+ * repastid
+ * typeid
+ * date
+ * } params 
+ */
+export const getMenuOnlineList = params => {
+    return service.request({
+        method: 'get',
+        url: '/wxdc/selectMenuOnlineList',
+        params
+    })
+}

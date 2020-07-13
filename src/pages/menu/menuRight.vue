@@ -1,36 +1,36 @@
 <template>
-	<article>
-		<ul>
-			<li>
-				<ul class="foodSitu">
-					<!-- 菜品列表 -->
-					<li v-for="li in 15" :key="li" @click="toMenuDetail">
-						<a href="javasript:void(0)" class="d-flex flex-column justify-content-center">
-							<img src="../../assets/img/st.jpg" alt="无法显示" />
-						</a>
-						<div class="shop_mid">
-							<div>
-								菜品名称{{li}}
-							</div>
-							<div class="small text-secondary">
-								口味备注说明
-							</div>
-							<div class="price">
-								￥10
-							</div>
-						</div>
-						<div class="list-cart bg-white" @click.stop="">
-							<i class="iconfont iconjianhao2 jiajian"></i>
-							<input readonly="" class="text_box" value="1">
-							<i class="iconfont iconjiahao jiajian" @click.stop="flyBall($event)"></i>
-						</div>
-					</li>
-				</ul>
-			</li>
-		</ul>
-		<!-- 飞入小球 -->
-		<i id="ball" class="iconfont iconjiahao"></i>
-	</article>
+<article>
+	<ul class="foodSitu" v-if="allFoodList.length > 0 && allFoodList[activeKey]">
+		<!-- 菜品列表 -->
+		<li v-for="item in allFoodList[activeKey].foods" :key="item.id" @click="toMenuDetail(item)">
+			<a href="javasript:void(0)" class="d-flex flex-column justify-content-center">
+				<img :src="item.imageurl || defaultFoodImg" alt="无法显示" />
+			</a>
+			<div class="shop_mid">
+				<div>
+					{{item.menuname}}
+				</div>
+				<div class="small text-secondary">
+					{{item.taste}}
+				</div>
+				<div class="price">
+					￥{{item.price}}
+				</div>
+			</div>
+			<div class="list-cart bg-white" @click.stop="">
+				<template v-if="item.candctotal > 0">
+					<i class="iconfont iconjianhao2 jiajian" v-show="item.choseNum > 0"
+						@click.stop="onReduceClick(item)"></i>
+					<input readonly="" class="text_box" v-model="item.choseNum" v-show="item.choseNum > 0" />
+					<i class="iconfont iconjiahao jiajian" @click.stop="onAddClick($event,item)"></i>
+				</template>
+				<span v-else class="text-secondary">已售完</span>
+			</div>
+		</li>
+	</ul>
+	<!-- 飞入小球 -->
+	<i id="ball" class="iconfont iconjiahao"></i>
+</article>
 </template>
 
 <script>
@@ -39,15 +39,36 @@ export default {
 	components:{
 		[Tag.name]:Tag
 	},
+	props: {
+		allFoodList:{
+			type: Array,
+			default: () => []
+		},
+		activeKey:{
+			type: Number,
+			default: 0
+		}
+	},
 	data(){
 		return{
-			
+			defaultFoodImg: require('@/assets/img/defaultfood.jpg'), // 默认菜品图片
 		}
 	},
 	methods:{
+		// 点击添加按钮
+		onAddClick(e,food){
+			// 飞入小球
+			this.flyBall(e);
+			food.choseNum++;
+		},
+		// 点击减号按钮触发
+		onReduceClick(food){
+			food.choseNum--;
+		},
 		toMenuDetail(){ //跳转到菜品详情
 			this.$router.push("/foodDetail");
 		},
+
 		flyBall:function(e){ //飞入小球
 			var $ball = document.getElementById('ball');
 			$ball.style.display='block';
@@ -107,6 +128,11 @@ ul{
 	margin-left: 1%;
 	overflow: hidden;
 	width: 74%;
+	&>div{
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
 	div:nth-child(1){
 		width: 100%;
 		height: 24px;
