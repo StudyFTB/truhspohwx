@@ -151,6 +151,7 @@ export default {
 			for(let item of this.allFoodList){
 				if(item.id == index) return false;
 			}
+			if(this.foodTypes.length == 0) return false;
 			this.httpGetMenuOnlineList(this.foodTypes[index].typeid);
 		},
 		// 重置数据

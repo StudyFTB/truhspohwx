@@ -89,9 +89,14 @@ export default {
 		},
 		// 点击清空购物车触发
 		onCleanAll(){
-			for(let item of this.shopCarData.foodList){
-				this.setAllFoodList(item,0);
-			}
+			this.$_confirm({
+				message: '确定要清除购物车吗？',
+				onConfirm: () => {
+					for(let item of this.shopCarData.foodList){
+						this.setAllFoodList(item,0);
+					}
+				}
+			});
 		},
 		// 改变allFoodList数量
 		setAllFoodList(food,num){
