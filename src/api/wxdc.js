@@ -36,6 +36,8 @@ export const getRepastAllDates = data => {
  * 查询订餐菜类列表信息
  * @param {
  * ctid
+ * repastid
+ * date
  * } params 
  */
 export const gettMenuTypeList = params => {

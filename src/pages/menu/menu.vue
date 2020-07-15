@@ -27,7 +27,7 @@
 		</div>
 	</div>
 	<!-- 菜类菜品 -->
-	<div class="main-wrap" :style="{height:`${mainWrapH}px`}">
+	<div class="main-wrap" :style="{height:`${mainWrapH}px`}" v-if="foodTypes.length !== 0">
 		<!-- 左侧栏 -->
 		<van-sidebar v-model="activeKey" @change="onSidebarChange">
 			<template v-for="item in foodTypes">
@@ -40,6 +40,8 @@
 			<menuRight :allFoodList="allFoodList" :activeKey="activeKey"></menuRight>
 		</div>
 	</div>
+	<!-- 空状态 -->
+	<van-empty v-else image="search" description="当前餐别未发菜谱" />
 	<!-- 购物车 -->
 	<shopCar :allFoodList="allFoodList" :shopCarData="shopCarData"></shopCar>
 </div>
@@ -49,7 +51,7 @@
 import Header from '../../components/Header.vue';
 import menuRight from './menuRight.vue';
 import shopCar from './shopCar.vue';
-import { Sidebar, SidebarItem, Tag, Icon } from 'vant';
+import { Sidebar, SidebarItem, Tag, Icon, Empty } from 'vant';
 import { gettMenuTypeList, getMenuOnlineList } from '@/api/wxdc';
 export default {
 	name: 'Menu',
@@ -59,6 +61,7 @@ export default {
 		[SidebarItem.name]:SidebarItem,
 		[Tag.name]:Tag,
 		[Icon.name]:Icon,
+		[Empty.name]: Empty,
 		menuRight:menuRight,
 		shopCar:shopCar
 	},
@@ -111,7 +114,9 @@ export default {
 		httpgettMenuTypeList(){
 			return new Promise((resolve,reject) => {
 				gettMenuTypeList({
-					ctid: this.$store.state.wxdc.areaData.ctid
+					ctid: this.$store.state.wxdc.areaData.ctid,
+					repastid: this.$route.query.repastid,
+					date: this.$route.query.date
 				}).then(res => {
 					// 加一个badge小红点
 					for(let item of res.data.data){
@@ -162,8 +167,8 @@ export default {
 			this.foodTypes = [];
 			this.allFoodList = [];
 			let foodTypes = await this.httpgettMenuTypeList();
+			if(foodTypes.length === 0) return false;
 			await this.httpGetMenuOnlineList(foodTypes[0].typeid);
-			this.choseFoods = [];
 		},
 		// 计算购物车数据
 		computedData(){
