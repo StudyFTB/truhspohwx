@@ -38,12 +38,21 @@ const getRefreshMenu = () => {
     return sessionStorage.getItem(refreshMenuKey);
 }
 
+const menuDetailKey = 'patient_wxdc_menuDetail';
+const setMenuDetail = value => {
+    return sessionStorage.setItem(menuDetailKey,JSON.stringify(value))
+}
+const getMenuDetail = () => {
+    return JSON.parse(sessionStorage.getItem(menuDetailKey));
+}
+
 const state = {
     qrstr: getQrstr() || '', // 选中床位的床位号
     refreshArea: getRefreshArea() || 'no', // 是否刷新食堂信息
     areaData: JSON.parse(getAreaData()) || "", // 选择的商家的信息
     refreshDate: getRefreshDate() || 'no', // 是否刷新日期餐别信息
-    refreshMenu: getRefreshMenu() || 'no' // 是否刷新菜单信息
+    refreshMenu: getRefreshMenu() || 'no', // 是否刷新菜单信息
+    menuDetail: getMenuDetail() || "" // 选择的菜品详情的信息
 }
 
 const mutations = {
@@ -61,6 +70,10 @@ const mutations = {
     },
     SET_REFRESHMENU: (state,value) => {
         state.refreshMenu = value;
+    },
+    SET_MENUDETAIL: (state,value) => {
+        setMenuDetail(value);
+        state.menuDetail = value;
     }
 }
 

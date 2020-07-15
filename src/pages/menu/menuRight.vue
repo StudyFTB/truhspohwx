@@ -65,7 +65,8 @@ export default {
 		onReduceClick(food){
 			food.choseNum--;
 		},
-		toMenuDetail(){ //跳转到菜品详情
+		toMenuDetail(item){ //跳转到菜品详情
+			this.$store.commit('wxdc/SET_MENUDETAIL',item);
 			this.$router.push("/foodDetail");
 		},
 

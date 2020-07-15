@@ -110,6 +110,10 @@ export default {
 		},
 		// 点击结算按钮触发
 		onPayClick(){
+			if(this.shopCarData.totalNum === 0){
+				this.$_tip('请先选择菜品','fail');
+				return false;
+			}
 			this.$router.push("/pay");
 		}
 	}
