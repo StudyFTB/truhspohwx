@@ -15,6 +15,17 @@
 			<div>&gt;</div>
 		</div>
 	</div>
+	<!-- 待支付 -->
+	<div class="wait-pay-wrap mr-w ml-2">
+		<div>
+			<span>等待支付</span>
+			<span>09:34</span>
+		</div>
+		<div>
+			<div>取消订单</div>
+			<div>去支付</div>
+		</div>
+	</div>
 	<!-- 弹出框信息 -->
 	<div class="mask" :class="{'d-none':!isShowPs}" @click="showOrderState()">
 		<div class="pr-3 pt-2 pb-2 bg-white rounded w-100 m-4" style="padding-left: calc(1rem + 8px);">
@@ -158,10 +169,38 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 #orderDetail{
 	background: #f5f5f5;
 	padding-bottom: .5rem;
+	.wait-pay-wrap{
+		background-color: #fff;
+		margin: .5rem 0;
+		padding: .5rem;
+		&>div:nth-child(1){
+			font-size: 1.2rem;
+			font-weight: bolder;
+			display: flex;
+			justify-content: center;
+			padding: 5px;
+			&>span:nth-child(2){
+				margin-left: 10px;
+				color: $info-color;
+			}
+		}
+		&>div:nth-child(2){
+			display: flex;
+			justify-content: space-around;
+			&>div:nth-child(1){
+				color: $danger-color;
+				padding: 5px 8px;
+			}
+			&>div:nth-child(2){
+				color: $primary-color;
+				padding: 5px 8px;
+			}
+		}
+	}
 }
 
 .orderState{

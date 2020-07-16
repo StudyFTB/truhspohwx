@@ -13,7 +13,8 @@
 			可选商家
 		</strong>
 		<ul class="ulBox" v-if="areaList.length !== 0">
-			<li class="d-flex justify-content-between" v-for="item in areaList" :key="item.id" @click="onAreaCLick(item)">
+			<li class="d-flex justify-content-between" v-for="item in areaList" :key="item.id"
+				@click="onAreaCLick(item)">
 				<div class="d-flex flex-column justify-content-center">
 					<img :src="item.ctimgurl || defaultImgSrc" class="d-block border round img-wrap" />
 				</div>
@@ -142,8 +143,8 @@ export default {
 		overflow: hidden; 
 	}
 	.img-wrap{
-		width: 50px;
-		max-height: 100%;
+		width: 75px;
+		height: 65px;
 	}
 }
 .ulBox{
@@ -153,11 +154,13 @@ export default {
 }
 .ulBox>li{
 	width: 100%;
+	padding: 10px 0;
 	border-bottom: 1px solid #f5f5f5;
 }
 .areaName{
-	width: calc(100% - 50px);
+	width: calc(100% - 75px);
+	height: 65px;
 	display:inline-block;
-	padding:12px;
+	padding:0 8px;
 }
 </style>

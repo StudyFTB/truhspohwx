@@ -24,7 +24,7 @@ import NavBar from '../../components/NavBar.vue';
 import orderList from './orderLists.vue';
 import { Tab, Tabs } from 'vant';
 
-export default{
+export default {
 	components:{
 		Header:Header,
 		NavBar:NavBar,
@@ -41,7 +41,7 @@ export default{
 </script>
 
 <style lang="scss" scoped>
-// #order{
-// 	background-color: #f5f5f5;
-// }
+#order{
+	background-color: #f5f5f5;
+}
 </style>

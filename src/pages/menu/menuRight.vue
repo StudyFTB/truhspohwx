@@ -120,8 +120,8 @@ ul{
 	&>li>a{
 		width:25%;
 		&>img{
-			max-width: 100%;
-			max-height: 63px;
+			width: 100%;
+			height: 67px;
 		}
 	}
 }
@@ -129,6 +129,7 @@ ul{
 	margin-left: 1%;
 	overflow: hidden;
 	width: 74%;
+	height: 67px;
 	&>div{
 		white-space: nowrap;
 		overflow: hidden;

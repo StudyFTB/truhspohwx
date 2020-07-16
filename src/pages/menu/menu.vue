@@ -237,12 +237,13 @@ export default {
 			flex-direction: column;
 			img{
 				width: 75px;
-				max-height: 100%;
+				height: 67px;
 			}
 		}
 		&>div:nth-child(2){
 			flex: 1;
 			padding-left: 15px;
+			height: 67px;
 			display: flex;
 			justify-content: space-between;
 			flex-direction: column;
