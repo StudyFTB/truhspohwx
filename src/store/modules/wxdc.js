@@ -1,11 +1,3 @@
-const qrstrKey = 'patient_wxdc_qrstr';
-const setQrstr = value => {
-    return sessionStorage.setItem(qrstrKey,value)
-}
-const getQrstr = () => {
-    return sessionStorage.getItem(qrstrKey);
-}
-
 const refreshAreaKey = 'patient_wxdc_refreshArea';
 const setRefreshArea = value => {
     return sessionStorage.setItem(refreshAreaKey,value)
@@ -46,19 +38,24 @@ const getMenuDetail = () => {
     return JSON.parse(sessionStorage.getItem(menuDetailKey));
 }
 
+const choseInfoKey = 'patient_wxdc_choseInfo';
+const setChoseInfo = value => {
+    return sessionStorage.setItem(choseInfoKey,JSON.stringify(value))
+}
+const getChoseInfo = () => {
+    return JSON.parse(sessionStorage.getItem(choseInfoKey));
+}
+
 const state = {
-    qrstr: getQrstr() || '', // 选中床位的床位号
     refreshArea: getRefreshArea() || 'no', // 是否刷新食堂信息
     areaData: JSON.parse(getAreaData()) || "", // 选择的商家的信息
     refreshDate: getRefreshDate() || 'no', // 是否刷新日期餐别信息
     refreshMenu: getRefreshMenu() || 'no', // 是否刷新菜单信息
-    menuDetail: getMenuDetail() || "" // 选择的菜品详情的信息
+    menuDetail: getMenuDetail() || "", // 选择的菜品详情的信息
+    choseInfo: getChoseInfo() || {} // 选择的床位、商家、餐别、购物车菜品
 }
 
 const mutations = {
-    SET_QRSTR: (state,value) => {
-        state.qrstr = value;
-    },
     SET_REFRESHAREA: (state,value) => {
         state.refreshArea = value;
     },
@@ -74,15 +71,14 @@ const mutations = {
     SET_MENUDETAIL: (state,value) => {
         setMenuDetail(value);
         state.menuDetail = value;
+    },
+    SET_CHOSEINFO: (state,value) => {
+        setChoseInfo(value);
+        state.choseInfo = value;
     }
 }
 
 const actions = {
-    // 设置选择床位的qrstr
-    SetQrstr({commit},value){
-        setQrstr(value);
-        commit('SET_QRSTR',value);
-    },
     // 设置refreshArea
     SetRefreshArea({commit},value){
         setRefreshArea(value);

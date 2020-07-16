@@ -88,7 +88,7 @@ export default {
 		httpGetAreaList(){
 			getAreaList({
 				openid: this.$store.state.app.openid,
-				qrstr: this.$store.state.wxdc.qrstr
+				qrstr: this.$store.state.wxdc.choseInfo.bed.qrstr
 			}).then(res => {
 				this.areaList = res.data.data;
 				this.$store.dispatch('wxdc/SetRefreshArea','no');
@@ -99,7 +99,9 @@ export default {
 			// 设置刷新日期
 			this.$store.dispatch('wxdc/SetRefreshDate','yes');
 			// 保存选择的商家信息
-			this.$store.dispatch('wxdc/SetAreaData',item);
+			let choseInfo = this.$store.state.wxdc.choseInfo;
+			choseInfo.area = item;
+			this.$store.commit('wxdc/SET_CHOSEINFO',choseInfo);
 			this.$router.push({ path: "/date" });
 		}
 	}

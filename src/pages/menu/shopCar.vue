@@ -9,7 +9,7 @@
 		<div class="needPayInfo">
 			<strong v-if="shopCarData.totalMoney>0">￥{{shopCarData.totalMoney}}</strong>
 			<strong v-else>未选购商品</strong>
-			<span>另需配送费：￥{{$store.state.wxdc.areaData.takefee}}</span>
+			<span>另需配送费：￥{{$store.state.wxdc.choseInfo.area.takefee}}</span>
 		</div>
 		<div class="toPayBtn " :class="{'bg-primary':shopCarData.totalNum>0}" @click.stop="onPayClick">
 			去结算
@@ -38,7 +38,7 @@
 				</li>
 			</ul>
 			<div>
-				<span>包装费：</span>
+				<span style="letter-spacing:4px;">包装费：</span>
 				<span>￥{{shopCarData.totalPackfee}}</span>
 			</div>
 			<div>
@@ -114,6 +114,10 @@ export default {
 				this.$_tip('请先选择菜品','fail');
 				return false;
 			}
+			// 保存选中的购物车信息
+			let choseInfo = this.$store.state.wxdc.choseInfo;
+			choseInfo.shopCarData = this.shopCarData;
+			this.$store.commit('wxdc/SET_CHOSEINFO',choseInfo);
 			this.$router.push("/pay");
 		}
 	}

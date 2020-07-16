@@ -1,14 +1,16 @@
 <template>
 <div id="menu">
 	<!-- 头部标题 -->
-	<Header :title="`${$route.query.date}（${$route.query.repastname}）`"></Header>
+	<Header
+		:title="`${$store.state.wxdc.choseInfo.dateRepast.date}
+			（${$store.state.wxdc.choseInfo.dateRepast.repast.repastname}）`"/>
 	<!-- 信息 -->
 	<div class="top-wrap" :style="{display:isShow ? `flex` : `none`}">
 		<div>
-			<img :src="$store.state.wxdc.areaData.ctimgurl || defaultImgSrc" />
+			<img :src="$store.state.wxdc.choseInfo.area.ctimgurl || defaultImgSrc" />
 		</div>
 		<div>
-			<span>{{$store.state.wxdc.areaData.ctname}}</span>
+			<span>{{$store.state.wxdc.choseInfo.area.ctname}}</span>
 			<div class="ps-wrap">
 				<div style="height: 18px;line-height: 18px;color: #ff9900;">
 					<van-icon name="star" />
@@ -21,7 +23,7 @@
 			</div>
 			<marquee class="text-secondary small">
 			<!-- <div class="text-secondary small"> -->
-				<span>{{$store.state.wxdc.areaData.ctdesc}}</span>
+				<span>{{$store.state.wxdc.choseInfo.area.ctdesc}}</span>
 			<!-- </div> -->
 			</marquee>
 		</div>
@@ -114,9 +116,9 @@ export default {
 		httpgettMenuTypeList(){
 			return new Promise((resolve,reject) => {
 				gettMenuTypeList({
-					ctid: this.$store.state.wxdc.areaData.ctid,
-					repastid: this.$route.query.repastid,
-					date: this.$route.query.date
+					ctid: this.$store.state.wxdc.choseInfo.area.ctid,
+					repastid: this.$store.state.wxdc.choseInfo.dateRepast.repast.repastid,
+					date: this.$store.state.wxdc.choseInfo.dateRepast.date
 				}).then(res => {
 					// 加一个badge小红点
 					for(let item of res.data.data){
@@ -130,10 +132,10 @@ export default {
 		// 获取菜品的接口
 		httpGetMenuOnlineList(typeid){
 			getMenuOnlineList({
-				ctid: this.$store.state.wxdc.areaData.ctid,
-				repastid: this.$route.query.repastid,
+				ctid: this.$store.state.wxdc.choseInfo.area.ctid,
+				repastid: this.$store.state.wxdc.choseInfo.dateRepast.repast.repastid,
 				typeid,
-				date: this.$route.query.date
+				date: this.$store.state.wxdc.choseInfo.dateRepast.date
 			}).then(res => {
 				// 将请求的数据加一个choseNum
 				let foods = [];
@@ -186,11 +188,15 @@ export default {
 						this.shopCarData.totalOtherfee += (parseFloat(food.otherfee)*food.choseNum);
 						this.shopCarData.totalNum += food.choseNum;
 						this.shopCarData.totalMoney += 
-							(parseFloat(food.otherfee)+parseFloat(food.packfee)+parseFloat(food.price))*food.choseNum;
+							((parseFloat(food.otherfee)+parseFloat(food.packfee)+parseFloat(food.price))*food.choseNum);
 						this.shopCarData.foodList.push(food);
 					}
 				}
 			}
+			// 固定小数位数
+			this.shopCarData.totalPackfee = this.shopCarData.totalPackfee.toFixed(2);
+			this.shopCarData.totalOtherfee = this.shopCarData.totalOtherfee.toFixed(2);
+			this.shopCarData.totalMoney = this.shopCarData.totalMoney.toFixed(2);
 		},
 
 		// 显示商家区域
@@ -257,6 +263,9 @@ export default {
 		display: flex;
 		/deep/ .van-sidebar-item__text{
 			display: block;
+		}
+		/deep/ .van-sidebar{
+			background-color: #fafafa;
 		}
 		.hidden-badge{
 			/deep/ .van-info{

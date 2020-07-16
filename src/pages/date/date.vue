@@ -1,7 +1,7 @@
 <template>
 <div>
 	<!-- 头部标题 -->
-	<Header :title="`${$store.state.wxdc.areaData.ctname}`"></Header>
+	<Header :title="`${$store.state.wxdc.choseInfo.area.ctname}`"></Header>
 	<!-- 主体部分 -->
 	<div class="pl-3 pr-3 mb-3 pt-2">
 		<!-- 选择 -->
@@ -104,9 +104,9 @@ export default {
 		httpGetRepastAllDates(){
 			getRepastAllDates({
 				openid: this.$store.state.app.openid,
-				qrstr: this.$store.state.wxdc.qrstr,
-				ctid: this.$store.state.wxdc.areaData.ctid,
-				advday: this.$store.state.wxdc.areaData.advday,
+				qrstr: this.$store.state.wxdc.choseInfo.bed.qrstr,
+				ctid: this.$store.state.wxdc.choseInfo.area.ctid,
+				advday: this.$store.state.wxdc.choseInfo.area.advday,
 				dates: this.apiDates
 			}).then(res => {
 				this.formatDates(res.data.data);
@@ -115,8 +115,8 @@ export default {
 		},
 		// 计算出日期的数组
 		computedDates(){
-			let advday = this.$store.state.wxdc.areaData.advday; // 今天可订几天后的
-			let dcdaycount = this.$store.state.wxdc.areaData.dcdaycount; // 可订天数
+			let advday = this.$store.state.wxdc.choseInfo.area.advday; // 今天可订几天后的
+			let dcdaycount = this.$store.state.wxdc.choseInfo.area.dcdaycount; // 可订天数
 			this.apiDates = [];
 			for(let i=advday; i<(advday+dcdaycount);i++){
 				this.apiDates.push(this.$_setDate(i));
@@ -151,15 +151,16 @@ export default {
 		},
 		// 点击订餐餐别触发
 		toMenu(repast){
-			this.$store.dispatch('wxdc/SetRefreshMenu','yes')
-			this.$router.push({
-				path: "/menu",
-				query:{
-					repastid: repast.repastid,
-					repastname: repast.repastname,
-					date: this.needDates[this.dateAct].dcDate
-				}
-			});
+			//刷新菜单
+			this.$store.dispatch('wxdc/SetRefreshMenu','yes');
+			// 保存选中的日期餐别
+			let choseInfo = this.$store.state.wxdc.choseInfo;
+			choseInfo.dateRepast = {
+				date: this.needDates[this.dateAct].dcDate,
+				repast
+			};
+			this.$store.commit('wxdc/SET_CHOSEINFO',choseInfo);
+			this.$router.push({path: "/menu"});
 		}
 	}
 }

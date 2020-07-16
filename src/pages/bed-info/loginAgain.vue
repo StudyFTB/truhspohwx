@@ -6,13 +6,15 @@
 				v-for="(bedli) in bedlis" :key="bedli.id">
 				<span class="newMark" v-if="bedli.isnowqr==1"></span>
 				<div>
-					<div>床位：{{bedli.qrBedName}}</div>
-					<div>医院：{{bedli.hspname}}</div>
-					<div>时间：{{bedli.createtime}}</div>
+					<div>医院名称：{{bedli.hspname}}</div>
+					<div>床位名称：{{bedli.qrBedName}}</div>
+					<div>床位编号：{{bedli.bedno}}</div>
+        			<div>床位类型：{{bedli.bedtype == 0 ? '在编' : '加床'}}</div>
+					<div>绑定时间：{{bedli.createtime}}</div>
 					<div>备注：{{bedli.remark}}</div>
 				</div>
 				<div class="bedBtn p-1">
-					<van-button type="danger" size="small" @click="onDCClick(bedli.qrstr)">订餐</van-button>
+					<van-button type="danger" size="small" @click="onDCClick(bedli)">订餐</van-button>
 				</div>
 			</li>
 		</ul>
@@ -57,8 +59,10 @@ export default {
 			});
 		},
 		// 点击订餐按钮触发
-		onDCClick(qrstr){
-			this.$store.dispatch('wxdc/SetQrstr',qrstr);
+		onDCClick(bedli){
+			let choseInfo = this.$store.state.wxdc.choseInfo;
+			choseInfo.bed = bedli
+			this.$store.commit('wxdc/SET_CHOSEINFO',choseInfo);
 			this.$store.dispatch('wxdc/SetRefreshArea','yes');
 			this.$router.push('/area');
 		}

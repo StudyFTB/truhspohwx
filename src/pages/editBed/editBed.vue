@@ -5,9 +5,11 @@
     <ul class="bedUl" v-if="bedlis.length !== 0">
         <li class="card p-2 m-2 d-flex flex-row justify-content-between" v-for="(bedli,index) in bedlis" :key="index">
             <div>
-                <div>床位：{{bedli.qrBedName}}</div>
-                <div>医院：{{bedli.hspname}}</div>
-                <div>时间：{{bedli.createtime}}</div>
+                <div>医院名称：{{bedli.hspname}}</div>
+                <div>床位名称：{{bedli.qrBedName}}</div>
+                <div>床位编号：{{bedli.bedno}}</div>
+        		<div>床位类型：{{bedli.bedtype == 0 ? '在编' : '加床'}}</div>
+                <div>绑定时间：{{bedli.createtime}}</div>
                 <div>备注：{{bedli.remark}}</div>
             </div>
             <div class="bedBtn p-1">
