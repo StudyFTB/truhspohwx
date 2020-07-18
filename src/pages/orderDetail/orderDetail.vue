@@ -121,7 +121,7 @@
 			<div class="d-flex flex-column justify-content-start">
 				<span class="text-nowrap text-right">{{orderDetail.addrstr}}</span>
 				<div class="text-right">
-					<span>{{orderDetail.contsphone}}|</span><span>{{orderDetail.contsphone}}</span>
+					<span>{{orderDetail.contsname}}|</span><span>{{orderDetail.contsphone}}</span>
 				</div>
 			</div>
 		</div>
