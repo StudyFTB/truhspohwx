@@ -111,11 +111,11 @@
 	<!-- 配送信息 -->
 	<div class="mt-2 bg-white pl-2 pr-2 mr-2 ml-2">
 		<div class="font-weight-bold pt-2 pb-1 border-bottom">配送信息</div>
-		<div class="d-flex justify-content-between pt-1 pb-1 border-bottom"
+		<!-- <div class="d-flex justify-content-between pt-1 pb-1 border-bottom"
 			v-if="parseInt($route.query.orderType) !== 0">
 			<span>配送状态</span>
 			<span>{{parseInt($route.query.orderType) == 1 ? '配送中' : '已送达'}}</span>
-		</div>
+		</div> -->
 		<div class="d-flex justify-content-between align-items-center pt-1 pb-1 border-bottom">
 			<span class="">收货地址</span>
 			<div class="d-flex flex-column justify-content-start">
