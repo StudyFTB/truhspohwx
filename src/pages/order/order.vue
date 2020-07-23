@@ -57,7 +57,7 @@ export default {
 				this.unPayOrders = res.data.data;
 			}).catch();
 		},
-		// 获取未支付的接口
+		// 获取待配送的接口
 		httpGetUnTakeOrderList(){
 			getUnTakeOrderList({
 				openid: this.$store.state.app.openid
@@ -65,7 +65,7 @@ export default {
 				this.waitTakeOrders = res.data.data;
 			}).catch();
 		},
-		// 获取未支付的接口
+		// 获取已完成的接口
 		httpGetFinishOrderList(){
 			getFinishOrderList({
 				openid: this.$store.state.app.openid

@@ -21,7 +21,7 @@
                 size="large" label-align="right" label-width="80"
             />
             <van-field v-model="input.name" label="联系人" size="large" label-align="right" label-width="80"
-                maxlength="6" placeholder="最多6位" required colon @blur="checkName"
+                maxlength="6" placeholder="最多6位" required colon @blur="checkName" ref="inputName"
                 :error="rules.name!==''" :error-message="rules.name" />
             <van-field v-model="input.phone" label="手机号" size="large" label-align="right" label-width="80"
                 maxlength="11" placeholder="最多11位数字" required colon type="digit" @blur="checkPhone"
@@ -93,6 +93,7 @@ import Header from '../../components/Header';
 import { Field, Popup, Picker } from 'vant';
 import { phone, special } from "@/utils/validate";
 import { selectWxPsnInfo } from "@/api/user";
+import { addPayOrder } from "@/api/pay";
 export default {
     name: 'Pay',
     components:{
@@ -120,6 +121,7 @@ export default {
     activated(){
         this.setTakeWay();
         this.httpSelectWxPsnInfo();
+        this.$refs.inputName.focus();  // 名字输入框获取焦点
     },
     methods:{
         // 请求用户信息的接口
@@ -129,6 +131,31 @@ export default {
             }).then(res => {
                 this.input.name = res.data.data.personname;
                 this.input.phone = res.data.data.phoneno;
+            }).catch();
+        },
+        // 提交订单发起支付的接口
+        httpAddPayOrder(){
+            let taketype = 0; // 配送方式，0自取，1配送，2堂食
+            if(this.takeWay==="到店自取") taketype=0;
+            else if(this.takeWay==="商家配送") taketype=1;
+            else if(this.takeWay==="堂食") taketype=2;
+            // 菜品的id和数量集合
+            let reqMenus = [];
+            for(let item of this.choseInfo.shopCarData.foodList){
+                reqMenus.push({ menuid:item.menuid, quantity:item.choseNum });
+            }
+            addPayOrder({
+                openid: this.$store.state.app.openid,
+                qrstr: this.choseInfo.bed.qrstr,
+                date: this.choseInfo.dateRepast.date,
+                ctid: this.choseInfo.area.ctid,
+                repastid: this.choseInfo.dateRepast.repast.repastid,
+                taketype,
+                contsphone: this.input.phone,
+                contsname: this.input.name,
+                reqMenus
+            }).then(res => {
+                console.log(res);
             }).catch();
         },
         // 设置配送方式
@@ -170,7 +197,8 @@ export default {
             this.checkName();
             this.checkPhone();
             if(this.rules.name==''&&this.rules.phone==''){
-                this.$router.replace("/order");
+                this.httpAddPayOrder();
+                // this.$router.replace("/order");
             }
         }
     }
