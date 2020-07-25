@@ -43,7 +43,7 @@ export default {
             defaultFoodImg: require('@/assets/img/defaultfood.jpg'), // 默认菜品图片
         }
     },
-    created(){
+    activated(){
         this.menuDetail = this.$store.state.wxdc.menuDetail;
     }
 }

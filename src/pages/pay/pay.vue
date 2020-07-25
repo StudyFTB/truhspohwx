@@ -121,7 +121,6 @@ export default {
     activated(){
         this.setTakeWay();
         this.httpSelectWxPsnInfo();
-        this.$refs.inputName.focus();  // 名字输入框获取焦点
     },
     methods:{
         // 请求用户信息的接口
