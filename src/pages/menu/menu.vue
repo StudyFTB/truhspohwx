@@ -166,6 +166,7 @@ export default {
 			let foodTypes = await this.httpgettMenuTypeList();
 			if(foodTypes.length === 0) return false;
 			// 初始化allFoodList
+			this.allFoodList = [];
 			for(let i=0;i<foodTypes.length;i++){
 				this.allFoodList[i] = [];
 			}

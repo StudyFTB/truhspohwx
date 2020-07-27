@@ -101,7 +101,7 @@ export default {
 		// 改变allFoodList数量
 		setAllFoodList(food,num){
 			for(let item of this.allFoodList){
-				for(let i of item.foods){
+				for(let i of item){
 					if(food.menuid == i.menuid){
 						i.choseNum = num;
 					}
@@ -211,6 +211,7 @@ export default {
 		padding:0 2%;
 		padding-bottom: 10px;
 		z-index: 998;
+		overflow: auto;
 		&>div:nth-child(3),&>div:nth-child(4){
 			&>span:nth-child(1){
 				width: 80px;
