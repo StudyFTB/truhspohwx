@@ -1,7 +1,8 @@
 <template>
 <div style="margin-bottom:50px;">
 	<!-- 滚动公告 -->
-	<van-notice-bar left-icon="volume-o" color="#1989fa" background="#ecf9ff" @click="show = true">
+	<van-notice-bar left-icon="volume-o" color="#1989fa" background="#ecf9ff" @click="show = true"
+		v-if="hadNotice">
 		本系统将于2019年11月18日进行维护更新,如有不便之处,请您原谅,谢谢合作!
 	</van-notice-bar>
 	<!-- 遮罩层 -->
@@ -40,7 +41,8 @@ export default {
 	},
 	data() {
 		return {
-			show: true //是否显示遮罩层
+			hadNotice: false, // 是否有公告
+			show: false //是否显示遮罩层
 		}
 	}
 }
