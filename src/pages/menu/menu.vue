@@ -147,7 +147,7 @@ export default {
 					foods.push(obj);
 				}
 				// 将封装后的数据加入allFoodList
-				this.allFoodList.splice(this.activeKey,1,foods);
+				this.$set(this.allFoodList,this.activeKey,foods);
 			}).catch();
 		},
 		// 点击侧边导航栏时触发
