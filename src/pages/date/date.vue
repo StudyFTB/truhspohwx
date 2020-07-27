@@ -89,6 +89,7 @@ export default {
 		if(this.$store.state.wxdc.refreshDate === 'yes')  return false;
 		this.apiDates = [];
 		this.needDates = [];
+		this.dateAct = 0;
 		this.computedDates();
 		this.httpGetRepastAllDates();
 	},
@@ -96,6 +97,7 @@ export default {
 		if(this.$store.state.wxdc.refreshDate !== 'yes') return false;
 		this.apiDates = [];
 		this.needDates = [];
+		this.dateAct = 0;
 		this.computedDates();
 		this.httpGetRepastAllDates();
 	},

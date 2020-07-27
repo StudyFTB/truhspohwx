@@ -21,7 +21,7 @@ export default new VueRouter({
 			path:'/scancode',
 			name:'ScanCode',
 			component: resolve => require(['../pages/scan-code'],resolve),
-			meta:{title:'扫码成功'}
+			meta:{title:'跳转中'}
 		},
 		{
 			path:'/banding',

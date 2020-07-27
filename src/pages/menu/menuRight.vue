@@ -1,8 +1,8 @@
 <template>
 <article>
-	<ul class="foodSitu" v-if="allFoodList.length > 0 && allFoodList[activeKey]">
+	<ul class="foodSitu">
 		<!-- 菜品列表 -->
-		<li v-for="item in allFoodList[activeKey].foods" :key="item.id" @click="toMenuDetail(item)">
+		<li v-for="item in this.allFoodList[this.activeKey]" :key="item.id" @click="toMenuDetail(item)">
 			<a href="javasript:void(0)" class="d-flex flex-column justify-content-center">
 				<img :src="item.imageurl || defaultFoodImg" alt="无法显示" />
 			</a>

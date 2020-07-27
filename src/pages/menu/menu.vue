@@ -98,13 +98,14 @@ export default {
 	watch:{
 		allFoodList:{
 			deep: true,
+			immediate: true,
 			handler: function (val, oldVal) {
-				for(let item of val){
+				for(let [key,item] of val.entries()){
 					let typeBadge = 0; // 左侧菜类的微标数量
-					for(let food of item.foods){
+					for(let food of item){
 						if(food.choseNum > 0) typeBadge++;
 					}
-					this.foodTypes[item.id].badge = typeBadge;
+					this.foodTypes[key].badge = typeBadge;
 				}
 				// 计算购物车数据
 				this.computedData();
@@ -146,18 +147,13 @@ export default {
 					foods.push(obj);
 				}
 				// 将封装后的数据加入allFoodList
-				this.allFoodList.push({
-					id: this.activeKey,
-					foods
-				});
+				this.allFoodList.splice(this.activeKey,1,foods);
 			}).catch();
 		},
 		// 点击侧边导航栏时触发
 		onSidebarChange(index){
-			// 如果所有列表已经有该索引，则不再请求
-			for(let item of this.allFoodList){
-				if(item.id == index) return false;
-			}
+			// 如果该索引已有内容，则不再请求
+			if(this.allFoodList[index].length > 0) return false;
 			if(this.foodTypes.length == 0) return false;
 			this.httpGetMenuOnlineList(this.foodTypes[index].typeid);
 		},
@@ -167,9 +163,12 @@ export default {
 			this.showTop();
 			this.activeKey = 0;
 			this.foodTypes = [];
-			this.allFoodList = [];
 			let foodTypes = await this.httpgettMenuTypeList();
 			if(foodTypes.length === 0) return false;
+			// 初始化allFoodList
+			for(let i=0;i<foodTypes.length;i++){
+				this.allFoodList[i] = [];
+			}
 			await this.httpGetMenuOnlineList(foodTypes[0].typeid);
 		},
 		// 计算购物车数据
@@ -182,7 +181,7 @@ export default {
 				foodList: [] // 购物车菜品列表
 			}
 			for(let item of this.allFoodList){
-				for(let food of item.foods){
+				for(let food of item){
 					if(food.choseNum>0){
 						this.shopCarData.totalPackfee += (parseFloat(food.packfee)*food.choseNum);
 						this.shopCarData.totalOtherfee += (parseFloat(food.otherfee)*food.choseNum);
