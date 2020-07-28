@@ -11,6 +11,7 @@ VueRouter.prototype.push = function push (location) {
 
 export default new VueRouter({
 	mode:'history',
+	base: process.env.NODE_ENV === 'production' ? '/HspoPatientApp/' : '',
 	routes:[
 		{
 			path:'/',
