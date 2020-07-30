@@ -200,7 +200,7 @@ export default {
 		},
 		// 完成未支付订单的支付接口
 		httpAddPayIsOrder(){
-			new Promise((resolve,reject) => {
+			return new Promise((resolve,reject) => {
 				addPayIsOrder({
 					openid: this.$store.state.app.openid,
 					orderno: this.$route.query.orderno
