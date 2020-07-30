@@ -24,10 +24,10 @@
 			</div>
 			<div>
 				<div>取消订单</div>
-				<div>去支付</div>
+				<div @click="onPay">去支付</div>
 			</div>
 		</template>
-		<template>
+		<template v-else>
 			<div class="over-time">
 				订单超时未支付
 			</div>
@@ -153,11 +153,14 @@
 <script>
 import Header from '../../components/Header';
 import { getOrderDetail, getFinishOrderDetail } from '@/api/order';
+import { addPayIsOrder } from '@/api/pay';
+import wxPay from '@/mixin/wxPay';
 export default {
 	name: 'OrderDetail',
 	components:{
 		Header:Header
 	},
+	mixins: [wxPay],
 	data(){
 		return{
 			defaultImgSrc: require('@/assets/img/defaultsj.jpg'), // 默认商家图片
@@ -171,6 +174,9 @@ export default {
 		this.bodyHidden();
 		this.getDetail();
 	},
+	deactivated(){
+        clearInterval(this.timer);
+    },
 	methods:{
 		// 获取未完成订单详情的接口
 		httpGetOrderDetail(){
@@ -191,6 +197,17 @@ export default {
 				this.computedMoney(res.data.data);
 				this.setTimer();
 			}).catch();
+		},
+		// 完成未支付订单的支付接口
+		httpAddPayIsOrder(){
+			new Promise((resolve,reject) => {
+				addPayIsOrder({
+					openid: this.$store.state.app.openid,
+					orderno: this.$route.query.orderno
+				}).then(res => {
+					resolve(res);
+				}).catch();
+			});
 		},
 		// 计算价格
 		computedMoney(data){
@@ -256,6 +273,19 @@ export default {
 				document.getElementsByTagName("body")[0].style.overflow="hidden";
 			else
 				document.getElementsByTagName("body")[0].style.overflow="visible";
+		},
+		// 未支付订单点击支付
+		async onPay(){
+			let res = await this.httpAddPayIsOrder();
+			let params = res.data.data;
+			let successCallBack = () => {
+				this.$_tip('支付成功');
+				this.$router.replace({path:'/order',query: {type:1}});
+			}
+			let failCallBack = () => {
+				this.$_tip('支付失败，请继续支付','fail');
+			}
+			this.onWxPay(params,successCallBack,failCallBack);
 		}
 	}
 }
@@ -294,6 +324,7 @@ export default {
 		}
 		&>div.over-time{
 			color: $secondary-color;
+			text-align: center;
 		}
 	}
 }

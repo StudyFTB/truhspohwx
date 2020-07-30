@@ -71,7 +71,7 @@
                     ￥{{(parseFloat(choseInfo.shopCarData.totalMoney)+parseFloat(choseInfo.area.takefee)).toFixed(2)}}
                 </strong>
             </div>
-            <div class="confirmPay" @click="toNext">
+            <div class="confirmPay" @click="onPay">
                 确认支付
             </div>
         </footer>
@@ -94,6 +94,7 @@ import { Field, Popup, Picker } from 'vant';
 import { phone, special } from "@/utils/validate";
 import { selectWxPsnInfo } from "@/api/user";
 import { addPayOrder } from "@/api/pay";
+import wxPay from "@/mixin/wxPay";
 export default {
     name: 'Pay',
     components:{
@@ -102,6 +103,7 @@ export default {
         [Popup.name]:Popup,
         [Picker.name]:Picker,
     },
+    mixins: [wxPay],
     data(){
         return {
             choseInfo: this.$store.state.wxdc.choseInfo,
@@ -143,19 +145,21 @@ export default {
             for(let item of this.choseInfo.shopCarData.foodList){
                 reqMenus.push({ menuid:item.menuid, quantity:item.choseNum });
             }
-            addPayOrder({
-                openid: this.$store.state.app.openid,
-                qrstr: this.choseInfo.bed.qrstr,
-                date: this.choseInfo.dateRepast.date,
-                ctid: this.choseInfo.area.ctid,
-                repastid: this.choseInfo.dateRepast.repast.repastid,
-                taketype,
-                contsphone: this.input.phone,
-                contsname: this.input.name,
-                reqMenus
-            }).then(res => {
-                console.log(res);
-            }).catch();
+            return new Promise((resolve,reject) => {
+                addPayOrder({
+                    openid: this.$store.state.app.openid,
+                    qrstr: this.choseInfo.bed.qrstr,
+                    date: this.choseInfo.dateRepast.date,
+                    ctid: this.choseInfo.area.ctid,
+                    repastid: this.choseInfo.dateRepast.repast.repastid,
+                    taketype,
+                    contsphone: this.input.phone,
+                    contsname: this.input.name,
+                    reqMenus
+                }).then(res => {
+                    resolve(res);
+                }).catch();
+            })
         },
         // 设置配送方式
         setTakeWay(){
@@ -192,12 +196,21 @@ export default {
                 this.rules.phone = '';
             }
         },
-        toNext(){
+        async onPay(){
             this.checkName();
             this.checkPhone();
             if(this.rules.name==''&&this.rules.phone==''){
-                this.httpAddPayOrder();
-                // this.$router.replace("/order");
+                let res = await this.httpAddPayOrder();
+                let params = res.data.data;
+                let successCallBack = () => {
+                    this.$_tip('支付成功');
+                    this.$router.replace({path:'/order',query: {type:1}});
+                }
+                let failCallBack = () => {
+                    this.$_tip('支付失败，请继续支付','fail');
+                    this.$router.replace({path:'/order',query: {type:0}});
+                }
+                this.onWxPay(params,successCallBack,failCallBack);
             }
         }
     }

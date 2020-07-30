@@ -27,7 +27,6 @@ export const addPayOrder = data => {
  * 用户提交已存在订餐订单发起支付
  * @param {
  * openid
- * qrstr
  * orderno
  * } data 
  */
