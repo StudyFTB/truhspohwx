@@ -6,7 +6,7 @@
     </div>
     <div v-else-if="isgz == false">
         <van-icon name="warning-o" size="60" color="#ffc107" />
-        <div>{{isgz}}还未关注公众号<br/>将跳转到关注公众号页面</div>
+        <div>还未关注公众号<br/>将跳转到关注公众号页面</div>
     </div>
     <div v-else-if="isbd == false">
         <van-icon name="warning-o" size="60" color="#ffc107" />
@@ -45,7 +45,7 @@ export default {
             // 接口请求完成才显示页面
             this.isShow = true;
             if(!this.isgz){
-                console.log(`未关注`);
+                location.replace("https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzU5Nzk3MDU0Mw==&scene=124#wechat_redirect");
             }else if(!this.isbd){
                 // 未绑定用户信息，跳转到绑定用户信息页面
                 this.$router.replace({name:"Banding"});
