@@ -42,9 +42,9 @@
 			<div class="title">温馨提示：</div>
 			<p>
 				当前订餐范围
-				<strong class="text-info">2019-10-10</strong>
+				<strong class="text-info">{{this.apiDates[0]}}</strong>
 				至
-				<strong class="text-info">2019-10-11</strong>
+				<strong class="text-info">{{this.apiDates[this.apiDates.length - 1]}}</strong>
 			</p>
 			<p>
 				<span class="dot"></span>
