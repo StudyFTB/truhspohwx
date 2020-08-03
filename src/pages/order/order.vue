@@ -47,7 +47,10 @@ export default {
 	},
 	activated(){
 		// 如果有地址参数，则为地址参数
-		this.active = this.$route.query.type ? parseInt(this.$route.query.type) : 0;
+		if(this.$route.query.type){
+			this.active = parseInt(this.$route.query.type);
+			this.$router.replace("/order");
+		}
 		this.activeChange();
 	},
 	methods: {
