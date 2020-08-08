@@ -67,7 +67,6 @@ export default {
             if(!bigImg) return null;
             const reg = /(.*)\.(png|jpg|gif|jpeg|webp)/g;
             let execArr = reg.exec(bigImg);
-            console.log(bigImg,execArr);
             return `${execArr[1]}ss.${execArr[2]}`
         }
     }

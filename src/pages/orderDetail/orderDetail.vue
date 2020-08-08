@@ -23,7 +23,7 @@
 				<span>{{remainTime.time}}</span>
 			</div>
 			<div>
-				<div>取消订单</div>
+				<div @click="onCancel">取消订单</div>
 				<div @click="onPay">去支付</div>
 			</div>
 		</template>
@@ -274,6 +274,10 @@ export default {
 				document.getElementsByTagName("body")[0].style.overflow="hidden";
 			else
 				document.getElementsByTagName("body")[0].style.overflow="visible";
+		},
+		// 点击取消订单触发
+		onCancel(){
+			this.$_tip('取消订单的功能暂未开放','fail');	
 		},
 		// 未支付订单点击支付
 		async onPay(){
