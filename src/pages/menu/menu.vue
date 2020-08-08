@@ -7,7 +7,7 @@
 	<!-- 信息 -->
 	<div class="top-wrap" :style="{display:isShow ? `flex` : `none`}">
 		<div>
-			<img :src="$store.state.wxdc.choseInfo.area.ctimgurl || defaultImgSrc" />
+			<img :src="$_getSmallImg($store.state.wxdc.choseInfo.area.ctimgurl) || defaultImgSrc" />
 		</div>
 		<div>
 			<span>{{$store.state.wxdc.choseInfo.area.ctname}}</span>
@@ -143,7 +143,9 @@ export default {
 				for(let [key,value] of res.data.data.entries()){
 					let obj = {};
 					obj = Object.assign({},value);
-					obj['choseNum'] = 0
+					obj['choseNum'] = 0;
+					// 缩略图
+					obj.ssimageurl = this.$_getSmallImg(obj.imageurl);
 					foods.push(obj);
 				}
 				// 将封装后的数据加入allFoodList

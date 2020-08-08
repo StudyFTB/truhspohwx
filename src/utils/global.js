@@ -57,5 +57,18 @@ export default {
                 time: `${remainMinute}:${remainSecond}` // 格式化，MM:ss
             }
         }
+        /**
+         * 把图片地址转为缩略图地址
+         * @param {
+         * bigImg
+         * } bigImg 
+         */
+        Vue.prototype.$_getSmallImg = bigImg => {
+            if(!bigImg) return null;
+            const reg = /(.*)\.(png|jpg|gif|jpeg|webp)/g;
+            let execArr = reg.exec(bigImg);
+            console.log(bigImg,execArr);
+            return `${execArr[1]}ss.${execArr[2]}`
+        }
     }
 }

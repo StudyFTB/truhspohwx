@@ -16,7 +16,8 @@
 			<li class="d-flex justify-content-between" v-for="item in areaList" :key="item.id"
 				@click="onAreaCLick(item)">
 				<div class="d-flex flex-column justify-content-center">
-					<img :src="item.ctimgurl || defaultImgSrc" class="d-block border round img-wrap" />
+					<img :src="$_getSmallImg(item.ctimgurl) || defaultImgSrc" 
+						class="d-block border round img-wrap" />
 				</div>
 				<div class="areaName">
 					<div class="font-weight-bold">

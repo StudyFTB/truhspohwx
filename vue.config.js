@@ -54,7 +54,7 @@ module.exports = {
     devServer: {
         open: false,
         // host: 'localhost',
-        port: 80,  // 8090
+        port: 8090,  // 8090
         // https: false,
         // hotOnly: false,
         // proxy: 'http://127.0.0.1:8080' // 配置跨域处理,只有一个代理

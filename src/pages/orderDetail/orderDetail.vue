@@ -75,7 +75,8 @@
 	<!-- 菜品信息 -->
 	<div class="foodInfo mr-2 ml-2">
 		<h6 class="pt-2 pb-2 font-weight-bold border-bottom d-flex justify-content-start align-items-center">
-			<img :src="orderDetail.ctimgurl || defaultImgSrc" style="height: 1.1rem;padding-right:.25rem;" >
+			<img :src="$_getSmallImg(orderDetail.ctimgurl) || defaultImgSrc"
+				style="height: 1.1rem;padding-right:.25rem;" >
 			{{orderDetail.ctname}}
 		</h6>
 		<div class="food" v-for="item in orderDetail.orderDetails" :key="item.id">

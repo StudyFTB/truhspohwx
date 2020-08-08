@@ -4,7 +4,7 @@
 		<!-- 菜品列表 -->
 		<li v-for="item in this.allFoodList[this.activeKey]" :key="item.id" @click="toMenuDetail(item)">
 			<a href="javasript:void(0)" class="d-flex flex-column justify-content-center">
-				<img :src="item.imageurl || defaultFoodImg" alt="无法显示" />
+				<img :src="item.ssimageurl || defaultFoodImg" alt="无法显示" />
 			</a>
 			<div class="shop_mid">
 				<div>

@@ -2,7 +2,7 @@
 <div id="orderLists">
     <div @click="$router.push({path:'/orderDetail',query:{orderType,orderno:orderInfo.orderno}})">
         <div class="top-wrap">
-            <img :src="orderInfo.ctimgurl || defaultImgSrc" alt="无法显示" />
+            <img :src="$_getSmallImg(orderInfo.ctimgurl) || defaultImgSrc" alt="无法显示" />
             <div>
                 <div>{{orderInfo.ctname}}</div>
                 <div>{{orderInfo.consumedate}}（{{orderInfo.repastname}}）</div>
