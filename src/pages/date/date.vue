@@ -53,14 +53,8 @@
 			<p>
 				<span class="dot"></span>
 				当前选中日期的可订餐别为
-				<strong class="text-info">
-					早餐
-				</strong>
-				<strong class="text-info">
-					午餐
-				</strong>
-				<strong class="text-info">
-					晚餐
+				<strong class="text-info" v-for="item in needDates[dateAct].repasts" :key="item.id">
+					{{item.repastname}}
 				</strong>
 			</p>
 		</div>
