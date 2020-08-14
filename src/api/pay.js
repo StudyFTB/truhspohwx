@@ -37,3 +37,16 @@ export const addPayIsOrder = data => {
         data
     })
 }
+/**
+ * 单笔支付交易订单查询
+ * @param {
+ * orderno
+ * } data 
+ */
+export const qryOrdPayState = params => {
+    return service.request({
+        method: 'get',
+        url: '/dcpay/qryOrdPayState',
+        params
+    })
+}

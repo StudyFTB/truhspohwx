@@ -53,9 +53,11 @@
 			<p>
 				<span class="dot"></span>
 				当前选中日期的可订餐别为
-				<strong class="text-info" v-for="item in needDates[dateAct].repasts" :key="item.id">
-					{{item.repastname}}
-				</strong>
+				<template v-if="needDates.length>0">
+					<strong class="text-info" v-for="item in needDates[dateAct].repasts" :key="item.id">
+						{{item.repastname}}
+					</strong>
+				</template>
 			</p>
 		</div>
 	</div>
